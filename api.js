@@ -1,5 +1,5 @@
 // On cible le port 3000 et le préfixe "/api" configuré dans ton fichier principal Node.js
-const API_BASE_URL = "http://localhost:3000/api"; 
+const API_BASE_URL = "https://apisecur-production.up.railway.app/api"; 
 
 /**
  * Va chercher la liste des produits depuis l'API REST

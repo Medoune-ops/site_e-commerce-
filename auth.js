@@ -1,4 +1,4 @@
-const AUTH_BASE_URL = "http://localhost:3000";
+const AUTH_BASE_URL = "https://apisecur-production.up.railway.app/api";
 
 function createAuthModals() {
     const html = `
