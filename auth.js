@@ -140,6 +140,9 @@ async function handleLogin(event) {
         localStorage.setItem("token", data.token);
         closeAuthModals();
         updateNavForLoggedUser(email);
+        await loadUserData();
+        renderCartModal();
+        renderWishlistModal();
     } catch (error) {
         errorEl.textContent = "Erreur de connexion au serveur";
         errorEl.classList.remove("hidden");
