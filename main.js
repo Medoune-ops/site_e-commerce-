@@ -1,4 +1,4 @@
-// Panier stocké en mémoire
+// ── PANIER ────────────────────────────────────────────
 let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
 function saveCart() {
@@ -117,6 +117,100 @@ function closeCartModal() {
     document.getElementById("cart-overlay").classList.add("hidden");
 }
 
+// ── WISHLIST ──────────────────────────────────────────
+let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
+
+function saveWishlist() {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+}
+
+function isInWishlist(id) {
+    return wishlist.some(item => item.id === String(id));
+}
+
+function updateWishlistBadge() {
+    const badge = document.querySelector(".wishlist-badge");
+    if (badge) badge.textContent = wishlist.length;
+}
+
+function toggleWishlist(product) {
+    const index = wishlist.findIndex(item => item.id === product.id);
+    if (index === -1) {
+        wishlist.push(product);
+    } else {
+        wishlist.splice(index, 1);
+    }
+    saveWishlist();
+    updateWishlistBadge();
+    renderWishlistModal();
+}
+
+function removeFromWishlist(id) {
+    wishlist = wishlist.filter(item => item.id !== id);
+    saveWishlist();
+    updateWishlistBadge();
+    renderWishlistModal();
+    const btn = document.querySelector(`.wishlist-btn[data-id="${id}"]`);
+    if (btn) { btn.textContent = '🤍'; btn.classList.remove('active'); }
+}
+
+function createWishlistModal() {
+    const html = `
+    <div id="wishlist-overlay" class="auth-overlay hidden">
+        <div class="auth-modal" style="max-width: 520px; width: 100%;">
+            <button class="auth-close-btn" onclick="closeWishlistModal()">✕</button>
+            <h2>❤️ Mes Favoris</h2>
+            <div id="wishlist-items"></div>
+        </div>
+    </div>`;
+    document.body.insertAdjacentHTML("beforeend", html);
+}
+
+function renderWishlistModal() {
+    const container = document.getElementById("wishlist-items");
+    if (!container) return;
+
+    if (wishlist.length === 0) {
+        container.innerHTML = `<p style="text-align:center;color:#999;padding:2rem 0;">Aucun favori pour l'instant 🤍</p>`;
+        return;
+    }
+
+    container.innerHTML = wishlist.map(item => `
+        <div style="display:flex;align-items:center;gap:1rem;padding:0.8rem 0;border-bottom:1px solid #eee;">
+            <img src="${item.image}" alt="${item.title}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;">
+            <div style="flex:1;">
+                <p style="font-weight:600;margin:0;">${item.title}</p>
+                <p style="color:#6c63ff;margin:0.2rem 0;">${item.price} FCFA</p>
+            </div>
+            <button onclick="removeFromWishlist('${item.id}')"
+                style="background:none;border:none;color:#e74c3c;cursor:pointer;font-size:1.2rem;">🗑</button>
+        </div>
+    `).join("");
+}
+
+function openWishlistModal() {
+    renderWishlistModal();
+    document.getElementById("wishlist-overlay").classList.remove("hidden");
+}
+
+function closeWishlistModal() {
+    document.getElementById("wishlist-overlay").classList.add("hidden");
+}
+
+function setupWishlistActions() {
+    document.querySelectorAll('.wishlist-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const { id, title, price, image } = button.dataset;
+            toggleWishlist({ id, title, price: parseFloat(price), image });
+            const inWishlist = isInWishlist(id);
+            button.textContent = inWishlist ? '❤️' : '🤍';
+            button.classList.toggle('active', inWishlist);
+        });
+    });
+}
+
+// ── PRODUITS ──────────────────────────────────────────
 function generateProductCardHTML(product) {
     const id = product._id;
     const title = product.name || "Produit sans nom";
@@ -125,11 +219,16 @@ function generateProductCardHTML(product) {
     const image = product.imageUrl || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400";
     const rating = product.rating || "4.5";
     const reviews = product.reviewsCount || "0";
+    const inWishlist = isInWishlist(String(id));
 
     return `
       <div class="product-card" data-id="${id}" data-title="${title}" data-price="${price}" data-image="${image}">
         <div class="product-image-container">
-          <button class="wishlist-btn" aria-label="Add to wishlist">❤️</button>
+          <button class="wishlist-btn ${inWishlist ? 'active' : ''}"
+                  data-id="${id}" data-title="${title}"
+                  data-price="${price}" data-image="${image}">
+              ${inWishlist ? '❤️' : '🤍'}
+          </button>
           <img src="${image}" alt="${title}" class="product-img">
         </div>
         <div class="product-info">
@@ -209,6 +308,7 @@ function renderProducts(list) {
 
     productsGrid.innerHTML = list.map(product => generateProductCardHTML(product)).join('');
     setupCartActions();
+    setupWishlistActions();
 }
 
 function setupSearch() {
@@ -246,12 +346,20 @@ function setupSearch() {
 
 document.addEventListener('DOMContentLoaded', () => {
     createCartModal();
+    createWishlistModal();
     updateCartBadge();
+    updateWishlistBadge();
     initProductsSection();
     setupSearch();
 
-    document.querySelector(".cart-btn")?.addEventListener("click", (e) => {
-        e.preventDefault();
-        openCartModal();
+    document.addEventListener("click", (e) => {
+        if (e.target.closest(".cart-btn")) {
+            e.preventDefault();
+            openCartModal();
+        }
+        if (e.target.closest(".wishlist-nav-btn")) {
+            e.preventDefault();
+            openWishlistModal();
+        }
     });
 });
