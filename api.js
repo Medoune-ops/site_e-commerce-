@@ -7,17 +7,64 @@ const API_BASE_URL = "https://apisecur-production.up.railway.app/api";
  */
 async function getBestSellingProducts() {
     try {
-        // Cela va appeler : http://localhost:3000/api/products
-        const response = await fetch(`${API_BASE_URL}/products`); 
-        
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP ! Statut : ${response.status}`);
-        }
-        
-        const data = await response.json();
-        return data; 
+        const response = await fetch(`${API_BASE_URL}/products`);
+        if (!response.ok) throw new Error(`Erreur HTTP ! Statut : ${response.status}`);
+        return await response.json();
     } catch (error) {
         console.error("Erreur lors de la récupération des produits de l'API :", error);
-        return []; 
+        return [];
     }
+}
+
+const BACKEND_URL = "https://apisecur-production.up.railway.app";
+
+async function syncCartToServer(cart) {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+        await fetch(`${BACKEND_URL}/users/me/cart`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+            body: JSON.stringify({ cart })
+        });
+    } catch (e) {}
+}
+
+async function syncWishlistToServer(wishlist) {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+        await fetch(`${BACKEND_URL}/users/me/wishlist`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+            body: JSON.stringify({ wishlist })
+        });
+    } catch (e) {}
+}
+
+async function loadUserData() {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    try {
+        const [cartRes, wishlistRes] = await Promise.all([
+            fetch(`${BACKEND_URL}/users/me/cart`, { headers: { "Authorization": `Bearer ${token}` } }),
+            fetch(`${BACKEND_URL}/users/me/wishlist`, { headers: { "Authorization": `Bearer ${token}` } })
+        ]);
+        if (cartRes.ok) {
+            const serverCart = await cartRes.json();
+            if (serverCart.length > 0) {
+                cart = serverCart;
+                saveCart();
+                updateCartBadge();
+            }
+        }
+        if (wishlistRes.ok) {
+            const serverWishlist = await wishlistRes.json();
+            if (serverWishlist.length > 0) {
+                wishlist = serverWishlist;
+                saveWishlist();
+                updateWishlistBadge();
+            }
+        }
+    } catch (e) {}
 }

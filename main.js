@@ -3,6 +3,7 @@ let cart = JSON.parse(localStorage.getItem("cart") || "[]");
 
 function saveCart() {
     localStorage.setItem("cart", JSON.stringify(cart));
+    syncCartToServer(cart);
 }
 
 function updateCartBadge() {
@@ -122,6 +123,7 @@ let wishlist = JSON.parse(localStorage.getItem("wishlist") || "[]");
 
 function saveWishlist() {
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
+    syncWishlistToServer(wishlist);
 }
 
 function isInWishlist(id) {
@@ -349,6 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
     createWishlistModal();
     updateCartBadge();
     updateWishlistBadge();
+    loadUserData();
     initProductsSection();
     setupSearch();
 
