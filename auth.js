@@ -15,7 +15,10 @@ function createAuthModals() {
                 </div>
                 <div class="auth-field">
                     <label>Mot de passe</label>
-                    <input type="password" id="login-password" placeholder="••••••••" required>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('login-password', this)">👁</button>
+                    </div>
                 </div>
                 <p id="login-error" class="auth-error hidden"></p>
                 <button type="submit" class="auth-submit-btn">Se connecter</button>
@@ -29,12 +32,23 @@ function createAuthModals() {
             <h2>Inscription</h2>
             <form id="form-register" onsubmit="handleRegister(event)">
                 <div class="auth-field">
+                    <label>Nom complet</label>
+                    <input type="text" id="register-name" placeholder="Prénom Nom" required>
+                </div>
+                <div class="auth-field">
+                    <label>Téléphone</label>
+                    <input type="tel" id="register-phone" placeholder="+221 77 000 00 00">
+                </div>
+                <div class="auth-field">
                     <label>Email</label>
                     <input type="email" id="register-email" placeholder="email@exemple.com" required>
                 </div>
                 <div class="auth-field">
                     <label>Mot de passe</label>
-                    <input type="password" id="register-password" placeholder="••••••••" required>
+                    <div class="password-wrapper">
+                        <input type="password" id="register-password" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" onclick="togglePassword('register-password', this)">👁</button>
+                    </div>
                 </div>
                 <p id="register-error" class="auth-error hidden"></p>
                 <button type="submit" class="auth-submit-btn">Créer mon compte</button>
@@ -62,6 +76,8 @@ function createAuthModals() {
             width: 100%;
             max-width: 420px;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .auth-modal.hidden { display: none; }
         .auth-modal h2 { margin-bottom: 1.5rem; font-size: 1.5rem; }
@@ -73,8 +89,22 @@ function createAuthModals() {
             border-radius: 8px;
             font-size: 1rem;
             outline: none;
+            width: 100%;
+            box-sizing: border-box;
         }
         .auth-field input:focus { border-color: #6c63ff; }
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-wrapper input { padding-right: 2.8rem; }
+        .toggle-password {
+            position: absolute; right: 0.7rem;
+            background: none; border: none;
+            cursor: pointer; font-size: 1rem; color: #888;
+            padding: 0;
+        }
         .auth-submit-btn {
             width: 100%;
             padding: 0.8rem;
@@ -98,6 +128,17 @@ function createAuthModals() {
         .auth-error.hidden { display: none; }
     `;
     document.head.appendChild(style);
+}
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+        input.type = "text";
+        btn.textContent = "🙈";
+    } else {
+        input.type = "password";
+        btn.textContent = "👁";
+    }
 }
 
 function showLogin() {
@@ -151,6 +192,8 @@ async function handleLogin(event) {
 
 async function handleRegister(event) {
     event.preventDefault();
+    const name = document.getElementById("register-name").value;
+    const phone = document.getElementById("register-phone").value;
     const email = document.getElementById("register-email").value;
     const password = document.getElementById("register-password").value;
     const errorEl = document.getElementById("register-error");
@@ -159,7 +202,7 @@ async function handleRegister(event) {
         const response = await fetch(`${AUTH_BASE_URL}/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ name, phone, email, password })
         });
 
         const data = await response.json();

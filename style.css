@@ -1,3 +1,6 @@
+html {
+    scroll-behavior: smooth;
+}
 
 :root {
     --primary-color: #556B2F;       /* Vert olive de la maquette */
