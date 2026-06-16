@@ -202,6 +202,13 @@ function updateNavForLoggedUser(email) {
 
 function logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("cart");
+    localStorage.removeItem("wishlist");
+
+    cart = [];
+    wishlist = [];
+    updateCartBadge();
+    updateWishlistBadge();
 
     const loginBtn = document.querySelector(".btn-login");
     const registerBtn = document.querySelector(".btn-register");
