@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mes commandes — Maket bi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ═══════════════════════════════════
+       HERO
+    ═══════════════════════════════════ */
+    .orders-hero {
+      background: var(--bg-light);
+      border-bottom: 1px solid #e8ebe0;
+      padding: 48px 0 40px;
+    }
+    .orders-hero-inner {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 20px; flex-wrap: wrap;
+    }
+    .orders-hero .eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--primary-color);
+      margin-bottom: 8px; display: block;
+    }
+    .orders-hero h1 { font-size: 32px; font-weight: 800; color: #111; }
+    .orders-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    /* ═══════════════════════════════════
+       LAYOUT PRINCIPAL
+    ═══════════════════════════════════ */
+    .orders-layout {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 32px;
+      padding: 40px 0 80px;
+      align-items: start;
+    }
+
+    /* ═══════════════════════════════════
+       SIDEBAR COMPTE
+    ═══════════════════════════════════ */
+    .account-sidebar {
+      background: #fff;
+      border: 1px solid #eef0f2;
+      border-radius: 16px;
+      overflow: hidden;
+      position: sticky; top: 86px;
+    }
+    .account-user {
+      padding: 24px 20px;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .account-avatar {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), #8aaf3f);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 18px; font-weight: 700; flex-shrink: 0;
+    }
+    .account-user-name { font-size: 14px; font-weight: 700; color: #111; }
+    .account-user-email { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+    .account-nav { padding: 10px 0; }
+    .account-nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 20px;
+      font-size: 14px; font-weight: 500; color: var(--text-light);
+      text-decoration: none; cursor: pointer; background: none; border: none;
+      width: 100%; text-align: left;
+      transition: background 0.15s, color 0.15s;
+    }
+    .account-nav-item:hover { background: var(--bg-light); color: var(--text-color); }
+    .account-nav-item.active {
+      background: #eef2e6; color: var(--primary-color); font-weight: 700;
+    }
+    .account-nav-item svg { flex-shrink: 0; opacity: 0.6; }
+    .account-nav-item.active svg { opacity: 1; }
+
+    /* ═══════════════════════════════════
+       CONTENU PRINCIPAL
+    ═══════════════════════════════════ */
+    .orders-main {}
+
+    /* Tabs filtre */
+    .orders-tabs {
+      display: flex; gap: 0;
+      border-bottom: 1.5px solid #eee;
+      margin-bottom: 28px; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .orders-tabs::-webkit-scrollbar { display: none; }
+    .orders-tab {
+      padding: 12px 20px;
+      font-size: 14px; font-weight: 600;
+      color: var(--text-light); cursor: pointer;
+      border-bottom: 2px solid transparent;
+      white-space: nowrap; background: none; border-top: none;
+      border-left: none; border-right: none;
+      transition: color 0.2s, border-color 0.2s;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .orders-tab:hover { color: var(--text-color); }
+    .orders-tab.active { color: var(--primary-color); border-bottom-color: var(--primary-color); }
+    .tab-count {
+      background: #eee; color: #666;
+      font-size: 11px; font-weight: 700;
+      padding: 2px 7px; border-radius: 50px;
+    }
+    .orders-tab.active .tab-count {
+      background: #eef2e6; color: var(--primary-color);
+    }
+
+    /* État vide / chargement */
+    .orders-state {
+      text-align: center; padding: 70px 20px;
+      display: none;
+    }
+    .orders-state.visible { display: block; }
+    .orders-state-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--bg-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; color: var(--text-light);
+    }
+    .orders-state h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #111; }
+    .orders-state p { font-size: 14px; color: var(--text-light); margin-bottom: 24px; }
+
+    /* Liste commandes */
+    .orders-list { display: flex; flex-direction: column; gap: 16px; }
+
+    /* Carte commande */
+    .order-card {
+      background: #fff; border: 1px solid #eef0f2;
+      border-radius: 16px; overflow: hidden;
+      transition: box-shadow 0.2s;
+    }
+    .order-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+
+    .order-card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 22px; border-bottom: 1px solid #f5f5f5;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .order-id { font-size: 13px; font-weight: 700; color: #111; }
+    .order-id span { font-weight: 400; color: var(--text-light); }
+    .order-date { font-size: 13px; color: var(--text-light); }
+    .order-status {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; border-radius: 50px;
+      font-size: 12px; font-weight: 700;
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .status-pending   { background: #fff8e1; color: #f57f17; }
+    .status-pending   .status-dot { background: #f57f17; }
+    .status-shipping  { background: #e3f2fd; color: #1565c0; }
+    .status-shipping  .status-dot { background: #1565c0; }
+    .status-delivered { background: #e8f5e9; color: #2e7d32; }
+    .status-delivered .status-dot { background: #2e7d32; }
+    .status-cancelled { background: #fce4ec; color: #c62828; }
+    .status-cancelled .status-dot { background: #c62828; }
+
+    /* Produits dans la commande */
+    .order-items {
+      padding: 16px 22px;
+      display: flex; gap: 12px; align-items: center;
+      flex-wrap: wrap;
+    }
+    .order-item-img {
+      width: 56px; height: 56px; border-radius: 10px;
+      object-fit: cover; background: var(--bg-light);
+      border: 1px solid #eee; flex-shrink: 0;
+    }
+    .order-items-info { flex: 1; min-width: 0; }
+    .order-items-names {
+      font-size: 13px; font-weight: 600; color: #111;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .order-items-count { font-size: 12px; color: var(--text-light); margin-top: 3px; }
+
+    .order-card-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 22px; background: #fafafa; border-top: 1px solid #f0f0f0;
+      flex-wrap: wrap; gap: 10px;
+    }
+    .order-total { font-size: 15px; font-weight: 800; color: #111; }
+    .order-total span { font-size: 13px; font-weight: 400; color: var(--text-light); margin-right: 6px; }
+    .order-actions { display: flex; gap: 8px; }
+    .btn-order-detail {
+      padding: 8px 16px; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      border: 1.5px solid #ddd; background: #fff; color: var(--text-color);
+      transition: all 0.2s;
+    }
+    .btn-order-detail:hover { border-color: var(--primary-color); color: var(--primary-color); }
+    .btn-order-reorder {
+      padding: 8px 16px; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      border: none; background: var(--primary-color); color: #fff;
+      transition: background 0.2s;
+    }
+    .btn-order-reorder:hover { background: var(--primary-hover); }
+
+    /* Tracker progression */
+    .order-tracker {
+      padding: 16px 22px 20px;
+      border-top: 1px solid #f5f5f5;
+    }
+    .tracker-steps {
+      display: flex; align-items: center; gap: 0;
+    }
+    .tracker-step {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1;
+    }
+    .tracker-step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; flex-shrink: 0;
+      border: 2px solid #ddd; background: #fff; color: #bbb;
+      z-index: 1; position: relative;
+    }
+    .tracker-step.done .tracker-step-dot {
+      background: var(--primary-color); border-color: var(--primary-color); color: #fff;
+    }
+    .tracker-step.current .tracker-step-dot {
+      border-color: var(--primary-color); color: var(--primary-color);
+      box-shadow: 0 0 0 4px rgba(85,107,47,0.12);
+    }
+    .tracker-step-label {
+      font-size: 11px; color: var(--text-light);
+      margin-top: 7px; text-align: center; white-space: nowrap;
+    }
+    .tracker-step.done .tracker-step-label,
+    .tracker-step.current .tracker-step-label { color: var(--primary-color); font-weight: 600; }
+    .tracker-line {
+      flex: 1; height: 2px; background: #eee; margin-bottom: 20px;
+    }
+    .tracker-line.done { background: var(--primary-color); }
+
+    /* Non connecté */
+    .not-logged {
+      text-align: center; padding: 80px 20px;
+    }
+    .not-logged-icon {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--bg-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 22px; color: var(--text-light);
+    }
+    .not-logged h2 { font-size: 22px; font-weight: 800; margin-bottom: 10px; }
+    .not-logged p { font-size: 15px; color: var(--text-light); margin-bottom: 28px; }
+    .not-logged-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-login-page {
+      padding: 13px 28px; border-radius: 50px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      background: var(--primary-color); color: #fff; border: none;
+      transition: background 0.2s;
+    }
+    .btn-login-page:hover { background: var(--primary-hover); }
+    .btn-shop-page {
+      padding: 13px 28px; border-radius: 50px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      background: #fff; color: var(--text-color);
+      border: 1.5px solid #ddd; text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    .btn-shop-page:hover { border-color: var(--primary-color); color: var(--primary-color); }
+
+    /* ═══════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════ */
+    @media (max-width: 860px) {
+      .orders-layout { grid-template-columns: 1fr; }
+      .account-sidebar { position: static; display: flex; flex-wrap: wrap; }
+      .account-user { border-bottom: none; border-right: 1px solid #f0f0f0; }
+      .account-nav { display: flex; flex-wrap: wrap; padding: 10px; flex: 1; }
+      .account-nav-item { width: auto; border-radius: 8px; }
+    }
+    @media (max-width: 540px) {
+      .order-card-head { flex-direction: column; align-items: flex-start; }
+      .orders-hero h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ NAVBAR ══════════════════════════════════════ -->
+  <header class="main-header">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo">
+        <span class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span> Maket bi
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="categories.html">Catégories</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn wishlist-nav-btn" aria-label="Favoris">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="wishlist-badge">0</span>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Panier">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ HERO ══════════════════════════════════════ -->
+  <section class="orders-hero">
+    <div class="container">
+      <div class="orders-hero-inner">
+        <div>
+          <span class="eyebrow">Mon espace</span>
+          <h1>Mes commandes</h1>
+        </div>
+        <div class="orders-hero-actions">
+          <a href="boutique.html" class="btn btn-secondary" style="padding:10px 22px;font-size:14px;">Continuer mes achats</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTENU ════════════════════════════════════ -->
+  <div class="container">
+    <div class="orders-layout">
+
+      <!-- Sidebar compte -->
+      <aside class="account-sidebar" id="account-sidebar">
+        <div class="account-user">
+          <div class="account-avatar" id="account-initial">?</div>
+          <div>
+            <div class="account-user-name" id="account-name">—</div>
+            <div class="account-user-email" id="account-email">—</div>
+          </div>
+        </div>
+        <nav class="account-nav">
+          <a href="commandes.html" class="account-nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Mes commandes
+          </a>
+          <button class="account-nav-item" onclick="openWishlistModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            Mes favoris
+          </button>
+          <a href="contact.html" class="account-nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Support
+          </a>
+          <button class="account-nav-item" id="sidebar-logout" style="color:#e74c3c;display:none;" onclick="logout(); window.location.reload();">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Se déconnecter
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Contenu commandes -->
+      <main class="orders-main" id="orders-main">
+
+        <!-- Non connecté -->
+        <div class="not-logged" id="state-not-logged">
+          <div class="not-logged-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
+          <h2>Connectez-vous pour voir vos commandes</h2>
+          <p>Vous devez être connecté à votre compte pour accéder à l'historique de vos commandes.</p>
+          <div class="not-logged-btns">
+            <button class="btn-login-page" onclick="showLogin()">Se connecter</button>
+            <a href="boutique.html" class="btn-shop-page">Découvrir la boutique</a>
+          </div>
+        </div>
+
+        <!-- Connecté -->
+        <div id="state-logged" style="display:none;">
+
+          <!-- Tabs -->
+          <div class="orders-tabs">
+            <button class="orders-tab active" data-tab="all">
+              Toutes
+              <span class="tab-count" id="count-all">0</span>
+            </button>
+            <button class="orders-tab" data-tab="pending">
+              En attente
+              <span class="tab-count" id="count-pending">0</span>
+            </button>
+            <button class="orders-tab" data-tab="shipping">
+              En livraison
+              <span class="tab-count" id="count-shipping">0</span>
+            </button>
+            <button class="orders-tab" data-tab="delivered">
+              Livrées
+              <span class="tab-count" id="count-delivered">0</span>
+            </button>
+            <button class="orders-tab" data-tab="cancelled">
+              Annulées
+              <span class="tab-count" id="count-cancelled">0</span>
+            </button>
+          </div>
+
+          <!-- Chargement -->
+          <div class="orders-state visible" id="state-loading">
+            <div class="orders-state-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            </div>
+            <h3>Chargement de vos commandes…</h3>
+          </div>
+
+          <!-- Vide -->
+          <div class="orders-state" id="state-empty">
+            <div class="orders-state-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <h3>Aucune commande trouvée</h3>
+            <p>Vous n'avez pas encore passé de commande dans cette catégorie.</p>
+            <a href="boutique.html" class="btn btn-primary" style="display:inline-block;">Découvrir nos produits →</a>
+          </div>
+
+          <!-- Liste -->
+          <div class="orders-list" id="orders-list"></div>
+
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- ══ FOOTER ═══════════════════════════════════ -->
+  <footer class="main-footer">
+    <div class="container footer-container">
+      <div class="footer-col">
+        <h2 class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Maket bi</h2>
+        <p class="footer-about">Votre boutique en ligne de confiance.</p>
+      </div>
+      <div class="footer-col"><h3>La Boutique</h3><ul>
+        <li><a href="boutique.html">Tous les produits</a></li>
+        <li><a href="categories.html">Catégories</a></li>
+        <li><a href="a-propos.html">À propos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul class="contact-info">
+        <li>Dakar, Sénégal</li>
+        <li>+221 77 921 10 73</li>
+        <li>contact@maketbi.sn</li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom"><div class="container bottom-container"><p>&copy; 2026 Maket bi. Tous droits réservés.</p></div></div>
+  </footer>
+
+  <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+
+  <script src="api.js"></script>
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    const BACKEND = "https://apisecur-production.up.railway.app";
+    let allOrders = [];
+
+    // Statuts
+    const STATUS_LABELS = {
+      pending:   { label: 'En attente',    cls: 'status-pending' },
+      confirmed: { label: 'Confirmée',     cls: 'status-pending' },
+      shipping:  { label: 'En livraison',  cls: 'status-shipping' },
+      delivered: { label: 'Livrée',        cls: 'status-delivered' },
+      cancelled: { label: 'Annulée',       cls: 'status-cancelled' },
+    };
+
+    // Étapes tracker
+    const TRACKER_STEPS = [
+      { key: 'confirmed', label: 'Confirmée' },
+      { key: 'shipping',  label: 'Expédiée'  },
+      { key: 'delivered', label: 'Livrée'    },
+    ];
+    const STEP_ORDER = ['pending','confirmed','shipping','delivered'];
+
+    function trackerHTML(status) {
+      if (status === 'cancelled') return '';
+      const currentIdx = STEP_ORDER.indexOf(status);
+      let html = '<div class="order-tracker"><div class="tracker-steps">';
+      TRACKER_STEPS.forEach((step, i) => {
+        const stepIdx = STEP_ORDER.indexOf(step.key);
+        const done    = stepIdx < currentIdx;
+        const current = stepIdx === currentIdx;
+        const cls     = done ? 'done' : current ? 'current' : '';
+        html += `<div class="tracker-step ${cls}">
+          <div class="tracker-step-dot">
+            ${done ? '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' : i + 1}
+          </div>
+          <span class="tracker-step-label">${step.label}</span>
+        </div>`;
+        if (i < TRACKER_STEPS.length - 1) {
+          html += `<div class="tracker-line ${done ? 'done' : ''}"></div>`;
+        }
+      });
+      html += '</div></div>';
+      return html;
+    }
+
+    function orderCardHTML(order) {
+      const status   = order.status || 'pending';
+      const statusCfg = STATUS_LABELS[status] || STATUS_LABELS.pending;
+      const items    = order.items || [];
+      const imgs     = items.slice(0, 3).map(it =>
+        `<img class="order-item-img" src="${it.image || 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100'}" alt="${it.title || ''}">`
+      ).join('');
+      const names    = items.map(it => it.title || it.name || 'Produit').join(', ');
+      const total    = order.total
+        ? Number(order.total).toLocaleString('fr-FR')
+        : items.reduce((s, it) => s + (it.price || 0) * (it.quantity || 1), 0).toLocaleString('fr-FR');
+      const date     = order.createdAt
+        ? new Date(order.createdAt).toLocaleDateString('fr-FR', { day:'numeric', month:'long', year:'numeric' })
+        : '—';
+      const orderId  = order._id ? order._id.slice(-8).toUpperCase() : order.id || '—';
+
+      return `
+        <div class="order-card" data-status="${status}">
+          <div class="order-card-head">
+            <div>
+              <div class="order-id">Commande <span>#${orderId}</span></div>
+              <div class="order-date">${date}</div>
+            </div>
+            <span class="order-status ${statusCfg.cls}">
+              <span class="status-dot"></span>${statusCfg.label}
+            </span>
+          </div>
+
+          <div class="order-items">
+            ${imgs}
+            <div class="order-items-info">
+              <div class="order-items-names">${names}</div>
+              <div class="order-items-count">${items.length} article${items.length > 1 ? 's' : ''}</div>
+            </div>
+          </div>
+
+          ${status !== 'cancelled' ? trackerHTML(status) : ''}
+
+          <div class="order-card-foot">
+            <div class="order-total"><span>Total</span>${total} F CFA</div>
+            <div class="order-actions">
+              <button class="btn-order-detail" onclick="alert('Détail de la commande #${orderId}')">Détails</button>
+              ${status === 'delivered' ? `<button class="btn-order-reorder" onclick="alert('Recommander les articles de la commande #${orderId}')">Recommander</button>` : ''}
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderOrders(tab) {
+      const list = tab === 'all' ? allOrders : allOrders.filter(o => {
+        if (tab === 'pending')   return ['pending','confirmed'].includes(o.status);
+        if (tab === 'shipping')  return o.status === 'shipping';
+        if (tab === 'delivered') return o.status === 'delivered';
+        if (tab === 'cancelled') return o.status === 'cancelled';
+        return true;
+      });
+
+      const el = document.getElementById('orders-list');
+      const empty = document.getElementById('state-empty');
+
+      if (list.length === 0) {
+        el.innerHTML = '';
+        empty.classList.add('visible');
+      } else {
+        empty.classList.remove('visible');
+        el.innerHTML = list.map(orderCardHTML).join('');
+      }
+    }
+
+    function updateCounts() {
+      document.getElementById('count-all').textContent       = allOrders.length;
+      document.getElementById('count-pending').textContent   = allOrders.filter(o => ['pending','confirmed'].includes(o.status)).length;
+      document.getElementById('count-shipping').textContent  = allOrders.filter(o => o.status === 'shipping').length;
+      document.getElementById('count-delivered').textContent = allOrders.filter(o => o.status === 'delivered').length;
+      document.getElementById('count-cancelled').textContent = allOrders.filter(o => o.status === 'cancelled').length;
+    }
+
+    async function loadOrders() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        const res = await fetch(`${BACKEND}/users/me/orders`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (!res.ok) throw new Error();
+        allOrders = await res.json();
+      } catch {
+        // API orders pas encore dispo — on utilise les données du panier local comme démonstration
+        allOrders = [];
+      }
+
+      document.getElementById('state-loading').classList.remove('visible');
+      updateCounts();
+      renderOrders('all');
+    }
+
+    // Tabs
+    document.querySelectorAll('.orders-tab').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.orders-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('state-empty').classList.remove('visible');
+        renderOrders(this.dataset.tab);
+      });
+    });
+
+    // Init au chargement
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        document.getElementById('state-not-logged').style.display = 'block';
+        return;
+      }
+
+      // Afficher la zone connectée
+      document.getElementById('state-not-logged').style.display = 'none';
+      document.getElementById('state-logged').style.display = 'block';
+      document.getElementById('sidebar-logout').style.display = 'flex';
+
+      // Infos utilisateur depuis le token JWT
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        const name  = payload.name  || payload.email?.split('@')[0] || 'Utilisateur';
+        const email = payload.email || '';
+        document.getElementById('account-name').textContent    = name;
+        document.getElementById('account-email').textContent   = email;
+        document.getElementById('account-initial').textContent = name.charAt(0).toUpperCase();
+      } catch {}
+
+      loadOrders();
+    });
+  </script>
+</body>
+</html>

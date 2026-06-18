@@ -232,17 +232,25 @@ function updateNavForLoggedUser(email) {
     }
 
     if (!document.getElementById("logout-btn")) {
+        const ordersBtn = document.createElement("a");
+        ordersBtn.id = "orders-btn";
+        ordersBtn.href = "commandes.html";
+        ordersBtn.className = "btn-auth btn-login";
+        ordersBtn.textContent = "Mes commandes";
+        registerBtn.insertAdjacentElement("afterend", ordersBtn);
+
         const logoutBtn = document.createElement("a");
         logoutBtn.id = "logout-btn";
         logoutBtn.href = "#";
         logoutBtn.className = "btn-auth btn-login";
         logoutBtn.textContent = "Déconnexion";
         logoutBtn.style.background = "#e74c3c";
+        logoutBtn.style.color = "#fff";
         logoutBtn.addEventListener("click", (e) => {
             e.preventDefault();
             logout();
         });
-        registerBtn.insertAdjacentElement("afterend", logoutBtn);
+        ordersBtn.insertAdjacentElement("afterend", logoutBtn);
     }
 }
 
@@ -266,6 +274,8 @@ function logout() {
         registerBtn.addEventListener("click", (e) => { e.preventDefault(); showRegister(); });
     }
     if (logoutBtn) logoutBtn.remove();
+    const ordersBtn = document.getElementById("orders-btn");
+    if (ordersBtn) ordersBtn.remove();
 }
 
 function checkAuthOnLoad() {
