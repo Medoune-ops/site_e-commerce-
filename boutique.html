@@ -275,13 +275,14 @@
   <script src="main.js"></script>
   <script src="auth.js"></script>
   <script>
-    const CATEGORY_MAP = {
-      'electronics':   'electronics',
-      'fashion':       'fashion',
-      'home-kitchen':  'home-kitchen',
-      'beauty':        'beauty',
-      'sports':        'sports',
-      'accessories':   'accessories',
+    // Mots-clés associés à chaque catégorie (filtre sur p.name car l'API n'a pas de champ category)
+    const CATEGORY_KEYWORDS = {
+      'electronics':  ['casque','écouteur','montre','téléphone','laptop','tablette','camera','photo','audio','bluetooth','wifi','tv','ordinateur'],
+      'fashion':      ['veste','robe','manteau','chemise','pantalon','jupe','pull','tissu','mode','vêtement','habit','tenue'],
+      'home-kitchen': ['lampe','cafetière','coussin','robot','cuisine','maison','décor','meuble','table','chaise','lit'],
+      'beauty':       ['sérum','parfum','crème','maquillage','palette','rouge','mascara','soin','beauté','hydrat'],
+      'sports':       ['yoga','sport','basket','casque vélo','bouteille','fitness','running','natation','tennis'],
+      'accessories':  ['sac','portefeuille','lunettes','ceinture','bijou','bague','collier','bracelet','montre'],
     };
 
     let searchQuery = '';
@@ -294,12 +295,20 @@
         list = list.filter(p => (p.name || '').toLowerCase().includes(searchQuery));
       }
 
-      // Catégories
+      // Catégories — filtre par mots-clés dans le nom si l'API ne retourne pas de champ category
       const checkedCats = Array.from(
         document.querySelectorAll('.filter-list input[type=checkbox]:checked')
       ).map(cb => cb.dataset.cat).filter(Boolean);
       if (checkedCats.length > 0) {
-        list = list.filter(p => checkedCats.includes(p.category));
+        list = list.filter(p => {
+          const name = (p.name || '').toLowerCase();
+          const cat  = (p.category || '').toLowerCase();
+          return checkedCats.some(c => {
+            if (cat && cat === c) return true;
+            const keywords = CATEGORY_KEYWORDS[c] || [];
+            return keywords.some(kw => name.includes(kw));
+          });
+        });
       }
 
       // Prix max
