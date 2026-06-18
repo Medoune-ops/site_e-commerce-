@@ -239,6 +239,13 @@ function updateNavForLoggedUser(email) {
         ordersBtn.textContent = "Mes commandes";
         registerBtn.insertAdjacentElement("afterend", ordersBtn);
 
+        const dashBtn = document.createElement("a");
+        dashBtn.id = "dashboard-btn";
+        dashBtn.href = "dashboard.html";
+        dashBtn.className = "btn-auth btn-login";
+        dashBtn.textContent = "Dashboard";
+        ordersBtn.insertAdjacentElement("afterend", dashBtn);
+
         const logoutBtn = document.createElement("a");
         logoutBtn.id = "logout-btn";
         logoutBtn.href = "#";
@@ -250,7 +257,7 @@ function updateNavForLoggedUser(email) {
             e.preventDefault();
             logout();
         });
-        ordersBtn.insertAdjacentElement("afterend", logoutBtn);
+        dashBtn.insertAdjacentElement("afterend", logoutBtn);
     }
 }
 
@@ -276,6 +283,8 @@ function logout() {
     if (logoutBtn) logoutBtn.remove();
     const ordersBtn = document.getElementById("orders-btn");
     if (ordersBtn) ordersBtn.remove();
+    const dashBtn = document.getElementById("dashboard-btn");
+    if (dashBtn) dashBtn.remove();
 }
 
 function checkAuthOnLoad() {
