@@ -226,38 +226,81 @@ function updateNavForLoggedUser(email) {
     const loginBtn = document.querySelector(".btn-login");
     const registerBtn = document.querySelector(".btn-register");
     if (loginBtn) loginBtn.style.display = "none";
-    if (registerBtn) {
-        registerBtn.textContent = email;
-        registerBtn.removeEventListener("click", showRegister);
-    }
+    if (registerBtn) registerBtn.style.display = "none";
 
-    if (!document.getElementById("logout-btn")) {
-        const ordersBtn = document.createElement("a");
-        ordersBtn.id = "orders-btn";
-        ordersBtn.href = "commandes.html";
-        ordersBtn.className = "btn-auth btn-login";
-        ordersBtn.textContent = "Mes commandes";
-        registerBtn.insertAdjacentElement("afterend", ordersBtn);
+    if (!document.getElementById("user-menu")) {
+        const initial = email ? email.charAt(0).toUpperCase() : "U";
+        const shortName = email ? email.split("@")[0] : "Compte";
 
-        const dashBtn = document.createElement("a");
-        dashBtn.id = "dashboard-btn";
-        dashBtn.href = "dashboard.html";
-        dashBtn.className = "btn-auth btn-login";
-        dashBtn.textContent = "Dashboard";
-        ordersBtn.insertAdjacentElement("afterend", dashBtn);
+        const wrapper = document.createElement("div");
+        wrapper.id = "user-menu";
+        wrapper.style.cssText = "position:relative;display:inline-block;";
 
-        const logoutBtn = document.createElement("a");
-        logoutBtn.id = "logout-btn";
-        logoutBtn.href = "#";
-        logoutBtn.className = "btn-auth btn-login";
-        logoutBtn.textContent = "Déconnexion";
-        logoutBtn.style.background = "#e74c3c";
-        logoutBtn.style.color = "#fff";
-        logoutBtn.addEventListener("click", (e) => {
+        wrapper.innerHTML = `
+            <button id="user-menu-btn" style="
+                display:flex;align-items:center;gap:8px;
+                background:none;border:1.5px solid #ddd;
+                border-radius:50px;padding:5px 12px 5px 6px;
+                cursor:pointer;font-size:14px;font-weight:600;color:#333;
+                transition:border-color 0.2s,background 0.2s;">
+                <span style="
+                    width:28px;height:28px;border-radius:50%;
+                    background:linear-gradient(135deg,#8aaf3f,#6c63ff);
+                    color:#fff;font-size:12px;font-weight:700;
+                    display:flex;align-items:center;justify-content:center;
+                    flex-shrink:0;">${initial}</span>
+                <span style="max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${shortName}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div id="user-dropdown" style="
+                display:none;position:absolute;right:0;top:calc(100% + 8px);
+                background:#fff;border:1px solid #eee;border-radius:14px;
+                box-shadow:0 8px 32px rgba(0,0,0,0.12);
+                min-width:180px;overflow:hidden;z-index:999;">
+                <a href="commandes.html" style="display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:14px;color:#333;text-decoration:none;transition:background 0.15s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>
+                    Mes commandes
+                </a>
+                <a href="dashboard.html" style="display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:14px;color:#333;text-decoration:none;transition:background 0.15s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Dashboard
+                </a>
+                <hr style="margin:4px 0;border:none;border-top:1px solid #f0f0f0;">
+                <button id="logout-btn" style="display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:14px;color:#e74c3c;background:none;border:none;width:100%;text-align:left;cursor:pointer;transition:background 0.15s;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Déconnexion
+                </button>
+            </div>`;
+
+        if (registerBtn) {
+            registerBtn.insertAdjacentElement("afterend", wrapper);
+        } else if (loginBtn) {
+            loginBtn.insertAdjacentElement("afterend", wrapper);
+        } else {
+            document.querySelector(".nav-actions")?.appendChild(wrapper);
+        }
+
+        document.getElementById("user-menu-btn").addEventListener("click", (e) => {
+            e.stopPropagation();
+            const dd = document.getElementById("user-dropdown");
+            dd.style.display = dd.style.display === "block" ? "none" : "block";
+        });
+
+        document.getElementById("logout-btn").addEventListener("click", (e) => {
             e.preventDefault();
             logout();
         });
-        dashBtn.insertAdjacentElement("afterend", logoutBtn);
+
+        document.addEventListener("click", () => {
+            const dd = document.getElementById("user-dropdown");
+            if (dd) dd.style.display = "none";
+        });
+
+        // Hover sur les liens du dropdown
+        document.querySelectorAll("#user-dropdown a, #user-dropdown button").forEach(el => {
+            el.addEventListener("mouseenter", () => el.style.background = "#f5f5f5");
+            el.addEventListener("mouseleave", () => el.style.background = "");
+        });
     }
 }
 
@@ -273,18 +316,14 @@ function logout() {
 
     const loginBtn = document.querySelector(".btn-login");
     const registerBtn = document.querySelector(".btn-register");
-    const logoutBtn = document.getElementById("logout-btn");
+    const userMenu = document.getElementById("user-menu");
 
     if (loginBtn) loginBtn.style.display = "";
     if (registerBtn) {
-        registerBtn.textContent = "Inscription";
+        registerBtn.style.display = "";
         registerBtn.addEventListener("click", (e) => { e.preventDefault(); showRegister(); });
     }
-    if (logoutBtn) logoutBtn.remove();
-    const ordersBtn = document.getElementById("orders-btn");
-    if (ordersBtn) ordersBtn.remove();
-    const dashBtn = document.getElementById("dashboard-btn");
-    if (dashBtn) dashBtn.remove();
+    if (userMenu) userMenu.remove();
 }
 
 function checkAuthOnLoad() {
