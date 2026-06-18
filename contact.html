@@ -6,84 +6,266 @@
   <title>Contact — Maket bi</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .page-hero { background: var(--bg-light); padding: 40px 0 30px; border-bottom: 1px solid #eee; }
-    .page-hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
-    .page-hero p { color: var(--text-light); font-size: 15px; }
-    .contact-layout { display: grid; grid-template-columns: 1fr 1.6fr; gap: 50px; padding: 60px 0 80px; }
-    .contact-info-block h2 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
-    .contact-info-block p { color: var(--text-light); font-size: 14px; line-height: 1.7; margin-bottom: 32px; }
-    .info-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 24px; }
-    .info-icon { width: 44px; height: 44px; background: var(--bg-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--primary-color); }
-    .info-item h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
-    .info-item p { font-size: 13px; color: var(--text-light); margin: 0; }
-    .contact-form-card { background: #fff; border: 1px solid #eef0f2; border-radius: 16px; padding: 36px; }
-    .contact-form-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+    /* ── HERO ── */
+    .contact-hero {
+      background: linear-gradient(135deg, #2d3a1e 0%, var(--primary-color) 100%);
+      padding: 70px 0 60px; text-align: center; color: #fff;
+    }
+    .contact-hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 13px; font-weight: 600; margin-bottom: 20px;
+    }
+    .contact-hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 14px; }
+    .contact-hero p { font-size: 16px; opacity: 0.85; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+
+    /* ── INFO CARDS ── */
+    .contact-cards-band { background: #fff; padding: 0 0 0; }
+    .contact-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; border: 1px solid #eee; border-radius: 18px;
+      overflow: hidden; margin-top: -32px;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    }
+    .contact-card {
+      padding: 32px 28px;
+      background: #fff;
+      border-right: 1px solid #eee;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+    }
+    .contact-card:last-child { border-right: none; }
+    .contact-card-icon {
+      width: 50px; height: 50px;
+      background: linear-gradient(135deg, #eef2e6, #dde8c8);
+      border-radius: 14px; display: flex; align-items: center;
+      justify-content: center; color: var(--primary-color); flex-shrink: 0;
+    }
+    .contact-card h3 { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px; }
+    .contact-card p, .contact-card a { font-size: 14px; color: var(--text-light); text-decoration: none; }
+    .contact-card a:hover { color: var(--primary-color); }
+
+    /* ── LAYOUT ── */
+    .contact-layout {
+      display: grid; grid-template-columns: 1fr 1.7fr;
+      gap: 48px; padding: 60px 0 80px; align-items: start;
+    }
+
+    /* ── INFOS SIDEBAR ── */
+    .contact-info-side h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; color: #111; }
+    .contact-info-side > p { color: var(--text-light); font-size: 14px; line-height: 1.8; margin-bottom: 32px; }
+
+    .hours-card {
+      background: var(--bg-light); border-radius: 16px; padding: 24px;
+      margin-bottom: 24px;
+    }
+    .hours-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 14px; color: #111; }
+    .hours-row {
+      display: flex; justify-content: space-between;
+      font-size: 13px; padding: 6px 0; border-bottom: 1px solid #e8e8e8;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-row .day { color: var(--text-light); }
+    .hours-row .time { font-weight: 600; color: #111; }
+    .hours-row .closed { color: #e74c3c; font-weight: 600; }
+
+    .social-contact { display: flex; gap: 10px; margin-top: 20px; }
+    .social-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-radius: 10px; border: 1.5px solid #ddd;
+      font-size: 13px; font-weight: 600; color: var(--text-color);
+      text-decoration: none; transition: all 0.2s;
+    }
+    .social-btn:hover { border-color: var(--primary-color); color: var(--primary-color); background: #f9fdf4; }
+
+    /* ── FORMULAIRE ── */
+    .contact-form-card {
+      background: #fff; border: 1.5px solid #eee;
+      border-radius: 20px; padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+    .form-header { margin-bottom: 28px; }
+    .form-header h2 { font-size: 22px; font-weight: 800; color: #111; margin-bottom: 6px; }
+    .form-header p { font-size: 14px; color: var(--text-light); }
     .form-group { margin-bottom: 18px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 14px; border: 1px solid #ddd; border-radius: 10px; font-size: 14px; font-family: inherit; color: var(--text-color); background: #fafafa; transition: border-color 0.2s; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary-color); background: #fff; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      margin-bottom: 7px; color: #333;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 16px;
+      border: 1.5px solid #ddd; border-radius: 12px;
+      font-size: 14px; font-family: inherit;
+      color: var(--text-color); background: #fafafa;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      outline: none; border-color: var(--primary-color); background: #fff;
+    }
     .form-group textarea { resize: vertical; min-height: 130px; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .btn-submit { background: var(--primary-color); color: #fff; border: none; padding: 14px 32px; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
-    .btn-submit:hover { background: var(--primary-hover); }
-    @media (max-width: 768px) { .contact-layout { grid-template-columns: 1fr; gap: 30px; padding: 36px 0 50px; } .form-row { grid-template-columns: 1fr; } .contact-form-card { padding: 24px 20px; } }
+    .btn-submit {
+      width: 100%; background: var(--primary-color); color: #fff;
+      border: none; padding: 15px; border-radius: 12px;
+      font-size: 15px; font-weight: 700; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-submit:hover { background: var(--primary-hover); transform: translateY(-1px); }
+    .form-note { font-size: 12px; color: var(--text-light); text-align: center; margin-top: 12px; }
+
+    /* ── SUCCESS MESSAGE ── */
+    .form-success {
+      display: none; text-align: center; padding: 40px 20px;
+    }
+    .form-success .success-icon {
+      width: 64px; height: 64px; background: #eef2e6;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px; color: var(--primary-color);
+    }
+    .form-success h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .form-success p { color: var(--text-light); font-size: 14px; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; gap: 32px; padding: 40px 0 60px; }
+      .contact-cards { grid-template-columns: 1fr; }
+      .contact-card { border-right: none; border-bottom: 1px solid #eee; }
+      .contact-card:last-child { border-bottom: none; }
+      .contact-hero h1 { font-size: 30px; }
+      .contact-form-card { padding: 28px 22px; }
+    }
+    @media (max-width: 480px) {
+      .form-row { grid-template-columns: 1fr; }
+      .contact-hero h1 { font-size: 24px; }
+    }
   </style>
 </head>
 <body>
   <header class="main-header">
     <div class="container navbar-container">
-      <a href="index.html" class="logo"><span class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span> Maket bi</a>
+      <a href="index.html" class="logo">
+        <span class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span> Maket bi
+      </a>
       <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
       <nav class="nav-links" id="nav-links">
-        <a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="categories.html">Catégories</a><a href="a-propos.html">À propos</a><a href="contact.html" class="active">Contact</a>
+        <a href="index.html">Accueil</a>
+        <a href="boutique.html">Boutique</a>
+        <a href="categories.html">Catégories</a>
+        <a href="a-propos.html">À propos</a>
+        <a href="contact.html" class="active">Contact</a>
       </nav>
       <div class="nav-actions">
-        <button class="icon-btn cart-btn" onclick="window.location='panier.html'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="cart-badge">0</span></button>
-        <a href="connexion.html" class="btn-auth btn-login">Connexion</a>
-        <a href="inscription.html" class="btn-auth btn-register">Inscription</a>
+        <button class="icon-btn wishlist-nav-btn" aria-label="Favoris">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="wishlist-badge">0</span>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Panier">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-badge">0</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <div class="page-hero">
+  <!-- HERO -->
+  <section class="contact-hero">
     <div class="container">
+      <div class="contact-hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Réponse sous 2 heures
+      </div>
       <h1>Contactez-nous</h1>
-      <p>Notre équipe est disponible pour répondre à toutes vos questions.</p>
+      <p>Notre équipe est disponible 7j/7 pour répondre à toutes vos questions et vous aider.</p>
+    </div>
+  </section>
+
+  <!-- CARDS INFO -->
+  <div class="container">
+    <div class="contact-cards">
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div>
+          <h3>Adresse</h3>
+          <p>Dakar, Sénégal<br>Plateau, Rue 10</p>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <h3>Téléphone</h3>
+          <a href="tel:+221779211073">+221 77 921 10 73</a>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <div>
+          <h3>E-mail</h3>
+          <a href="mailto:contact@maketbi.sn">contact@maketbi.sn</a>
+        </div>
+      </div>
     </div>
   </div>
 
+  <!-- LAYOUT PRINCIPAL -->
   <div class="container">
     <div class="contact-layout">
-      <div class="contact-info-block">
+
+      <!-- INFOS -->
+      <div class="contact-info-side">
         <h2>Nous sommes là pour vous</h2>
-        <p>Que ce soit pour un suivi de commande, une question sur un produit ou un retour, notre équipe est disponible 7j/7.</p>
-        <div class="info-item">
-          <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><h3>Adresse</h3><p>Dakar, Sénégal — Plateau, Rue 10</p></div>
+        <p>Que ce soit pour un suivi de commande, une question produit ou un retour, notre équipe répond rapidement et avec le sourire.</p>
+
+        <div class="hours-card">
+          <h4>
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Horaires d'ouverture
+          </h4>
+          <div class="hours-row"><span class="day">Lundi – Vendredi</span><span class="time">8h00 – 20h00</span></div>
+          <div class="hours-row"><span class="day">Samedi</span><span class="time">9h00 – 18h00</span></div>
+          <div class="hours-row"><span class="day">Dimanche</span><span class="closed">Fermé</span></div>
         </div>
-        <div class="info-item">
-          <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div><h3>Téléphone</h3><p>+221 77 921 10 73</p></div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><h3>E-mail</h3><p>contact@maketbi.sn</p></div>
-        </div>
-        <div class="info-item">
-          <div class="info-icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <div><h3>Horaires</h3><p>Lundi – Samedi : 8h00 – 20h00</p></div>
+
+        <div class="social-contact">
+          <a href="#" class="social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+          <a href="#" class="social-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            WhatsApp
+          </a>
         </div>
       </div>
 
+      <!-- FORMULAIRE -->
       <div class="contact-form-card">
-        <h2>Envoyer un message</h2>
+        <div class="form-header">
+          <h2>Envoyer un message</h2>
+          <p>Remplissez le formulaire et nous vous répondons dans les 2 heures.</p>
+        </div>
         <form id="contact-form" novalidate>
           <div class="form-row">
-            <div class="form-group"><label for="c-prenom">Prénom</label><input type="text" id="c-prenom" placeholder="Votre prénom" required></div>
-            <div class="form-group"><label for="c-nom">Nom</label><input type="text" id="c-nom" placeholder="Votre nom" required></div>
+            <div class="form-group">
+              <label for="c-prenom">Prénom *</label>
+              <input type="text" id="c-prenom" placeholder="Votre prénom" required>
+            </div>
+            <div class="form-group">
+              <label for="c-nom">Nom *</label>
+              <input type="text" id="c-nom" placeholder="Votre nom" required>
+            </div>
           </div>
-          <div class="form-group"><label for="c-email">E-mail</label><input type="email" id="c-email" placeholder="vous@exemple.com" required></div>
-          <div class="form-group"><label for="c-sujet">Sujet</label>
+          <div class="form-group">
+            <label for="c-email">E-mail *</label>
+            <input type="email" id="c-email" placeholder="vous@exemple.com" required>
+          </div>
+          <div class="form-group">
+            <label for="c-sujet">Sujet</label>
             <select id="c-sujet">
               <option value="">-- Choisissez un sujet --</option>
               <option>Suivi de commande</option>
@@ -93,23 +275,60 @@
               <option>Autre</option>
             </select>
           </div>
-          <div class="form-group"><label for="c-message">Message</label><textarea id="c-message" placeholder="Décrivez votre demande en détail..." required></textarea></div>
+          <div class="form-group">
+            <label for="c-message">Message *</label>
+            <textarea id="c-message" placeholder="Décrivez votre demande en détail..." required></textarea>
+          </div>
           <button type="submit" class="btn-submit">Envoyer le message →</button>
+          <p class="form-note">* Champs obligatoires. Nous ne partageons jamais vos données.</p>
         </form>
+        <div class="form-success" id="form-success">
+          <div class="success-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Message envoyé !</h3>
+          <p>Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.</p>
+        </div>
       </div>
     </div>
   </div>
 
   <footer class="main-footer">
     <div class="container footer-container">
-      <div class="footer-col"><h2 class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Maket bi</h2><p class="footer-about">Votre boutique en ligne de confiance.</p></div>
-      <div class="footer-col"><h3>La Boutique</h3><ul><li><a href="boutique.html">Tous les produits</a></li><li><a href="categories.html">Catégories</a></li><li><a href="promotions.html">Promotions</a></li></ul></div>
-      <div class="footer-col"><h3>Support</h3><ul><li><a href="faq.html">FAQ</a></li><li><a href="livraison.html">Livraison</a></li><li><a href="retours.html">Retours</a></li></ul></div>
-      <div class="footer-col"><h3>Contact</h3><ul class="contact-info"><li>Dakar, Sénégal</li><li>+221 77 921 10 73</li><li>contact@maketbi.sn</li></ul></div>
+      <div class="footer-col">
+        <h2 class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Maket bi</h2>
+        <p class="footer-about">Votre boutique en ligne de confiance, pour trouver les meilleurs produits livrés directement chez vous.</p>
+      </div>
+      <div class="footer-col"><h3>La Boutique</h3><ul>
+        <li><a href="boutique.html">Tous les produits</a></li>
+        <li><a href="categories.html">Catégories</a></li>
+        <li><a href="a-propos.html">À propos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul class="contact-info">
+        <li>Dakar, Sénégal</li>
+        <li>+221 77 921 10 73</li>
+        <li>contact@maketbi.sn</li>
+      </ul></div>
     </div>
     <div class="footer-bottom"><div class="container bottom-container"><p>&copy; 2026 Maket bi. Tous droits réservés.</p></div></div>
   </footer>
+
   <script src="main.js"></script>
   <script src="auth.js"></script>
+  <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const prenom = document.getElementById('c-prenom').value.trim();
+      const email = document.getElementById('c-email').value.trim();
+      const message = document.getElementById('c-message').value.trim();
+      if (!prenom || !email || !message) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+      this.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    });
+  </script>
 </body>
 </html>

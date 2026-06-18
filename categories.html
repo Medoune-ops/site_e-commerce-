@@ -6,22 +6,133 @@
   <title>Catégories — Maket bi</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .page-hero { background: var(--bg-light); padding: 40px 0 30px; border-bottom: 1px solid #eee; }
-    .page-hero h1 { font-size: 32px; font-weight: 700; margin-bottom: 6px; }
-    .page-hero p { color: var(--text-light); font-size: 15px; }
-    .categories-page { padding: 50px 0 70px; }
-    .cat-section { margin-bottom: 60px; }
-    .cat-section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 14px; border-bottom: 2px solid var(--bg-light); }
-    .cat-section-header h2 { font-size: 22px; font-weight: 700; }
-    .cat-section-header span { font-size: 13px; color: var(--text-light); background: var(--bg-light); padding: 3px 10px; border-radius: 20px; }
-    .cat-products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
-    .cat-card { background: #fff; border: 1px solid #eef0f2; border-radius: 12px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; }
-    .cat-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.07); }
-    .cat-card-img { width: 100%; height: 180px; object-fit: cover; background: var(--bg-light); }
-    .cat-card-body { padding: 14px 16px; }
-    .cat-card-body h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-    .cat-card-body p { font-size: 13px; color: var(--text-light); }
-    .cat-card-body .price { font-size: 16px; font-weight: 700; color: var(--primary-color); margin-top: 8px; }
+    /* ── HERO ── */
+    .cat-hero {
+      background: linear-gradient(135deg, #2d3a1e 0%, var(--primary-color) 100%);
+      padding: 70px 0 60px; text-align: center; color: #fff;
+    }
+    .cat-hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 16px; border-radius: 50px;
+      font-size: 13px; font-weight: 600; margin-bottom: 20px;
+    }
+    .cat-hero h1 { font-size: 42px; font-weight: 800; margin-bottom: 14px; }
+    .cat-hero p { font-size: 16px; opacity: 0.85; max-width: 500px; margin: 0 auto 30px; line-height: 1.7; }
+
+    /* Nav catégorie rapide */
+    .cat-nav {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-top: 8px;
+    }
+    .cat-nav-btn {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      color: #fff; padding: 8px 18px; border-radius: 50px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: background 0.2s;
+    }
+    .cat-nav-btn:hover { background: rgba(255,255,255,0.28); }
+
+    /* ── GRILLE GRANDES CATÉGORIES ── */
+    .cat-overview { padding: 60px 0 50px; }
+    .cat-overview-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cat-overview-card {
+      position: relative; border-radius: 18px; overflow: hidden;
+      height: 200px; cursor: pointer; text-decoration: none; display: block;
+    }
+    .cat-overview-card img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .cat-overview-card:hover img { transform: scale(1.06); }
+    .cat-overview-card::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 60%);
+    }
+    .cat-overview-card.tall { grid-row: span 2; height: 100%; }
+    .cat-overview-label {
+      position: absolute; bottom: 18px; left: 20px; z-index: 1; color: #fff;
+    }
+    .cat-overview-label h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .cat-overview-label span {
+      font-size: 13px; opacity: 0.85;
+      background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 50px;
+    }
+
+    /* ── SECTION PAR CATÉGORIE ── */
+    .categories-page { padding: 10px 0 70px; }
+    .cat-section { margin-bottom: 64px; scroll-margin-top: 80px; }
+    .cat-section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 24px; padding-bottom: 16px;
+      border-bottom: 2px solid var(--bg-light);
+    }
+    .cat-section-left { display: flex; align-items: center; gap: 14px; }
+    .cat-section-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #eef2e6, #dde8c8);
+      border-radius: 12px; display: flex; align-items: center;
+      justify-content: center; font-size: 20px;
+    }
+    .cat-section-header h2 { font-size: 22px; font-weight: 800; color: #111; }
+    .cat-section-header .cat-count {
+      font-size: 13px; color: var(--text-light);
+      background: var(--bg-light); padding: 3px 10px; border-radius: 20px;
+    }
+    .cat-section-link {
+      font-size: 13px; font-weight: 600; color: var(--primary-color);
+      text-decoration: none; display: flex; align-items: center; gap: 4px;
+    }
+    .cat-section-link:hover { text-decoration: underline; }
+
+    /* Grille produits catégorie */
+    .cat-products-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 18px;
+    }
+    .cat-card {
+      background: #fff; border: 1px solid #eef0f2; border-radius: 14px;
+      overflow: hidden; transition: transform 0.22s, box-shadow 0.22s;
+      cursor: pointer; text-decoration: none; display: block; color: inherit;
+    }
+    .cat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.09); }
+    .cat-card-img-wrap { position: relative; overflow: hidden; height: 175px; background: var(--bg-light); }
+    .cat-card-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .cat-card:hover .cat-card-img { transform: scale(1.05); }
+    .cat-card-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--primary-color); color: #fff;
+      font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 50px;
+    }
+    .cat-card-body { padding: 14px 16px 18px; }
+    .cat-card-body h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #111; }
+    .cat-card-body p { font-size: 12px; color: var(--text-light); margin-bottom: 10px; }
+    .cat-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .cat-card-price { font-size: 16px; font-weight: 800; color: var(--primary-color); }
+    .cat-card-btn {
+      background: var(--bg-light); border: none; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center;
+      color: var(--primary-color); transition: background 0.2s;
+    }
+    .cat-card-btn:hover { background: var(--primary-color); color: #fff; }
+
+    @media (max-width: 900px) {
+      .cat-overview-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-overview-card.tall { grid-row: span 1; height: 180px; }
+      .cat-hero h1 { font-size: 30px; }
+    }
+    @media (max-width: 600px) {
+      .cat-overview-grid { grid-template-columns: 1fr; }
+      .cat-products-grid { grid-template-columns: repeat(2, 1fr); }
+      .cat-hero h1 { font-size: 24px; }
+      .cat-nav { gap: 8px; }
+      .cat-nav-btn { padding: 7px 14px; font-size: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -39,98 +150,300 @@
         <a href="contact.html">Contact</a>
       </nav>
       <div class="nav-actions">
-        <button class="icon-btn wishlist-nav-btn" onclick="window.location='wishlist.html'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg><span class="wishlist-badge">0</span></button>
-        <button class="icon-btn cart-btn" onclick="window.location='panier.html'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="cart-badge">0</span></button>
-        <a href="connexion.html" class="btn-auth btn-login">Connexion</a>
-        <a href="inscription.html" class="btn-auth btn-register">Inscription</a>
+        <button class="icon-btn wishlist-nav-btn" aria-label="Favoris">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="wishlist-badge">0</span>
+        </button>
+        <button class="icon-btn cart-btn" aria-label="Panier">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          <span class="cart-badge">0</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <div class="page-hero">
+  <!-- HERO -->
+  <section class="cat-hero">
     <div class="container">
-      <h1>Toutes les catégories</h1>
-      <p>Explorez nos produits classés par univers</p>
+      <div class="cat-hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        6 univers disponibles
+      </div>
+      <h1>Explorez nos catégories</h1>
+      <p>De l'électronique à la mode, trouvez exactement ce que vous cherchez dans notre sélection soigneusement organisée.</p>
+      <nav class="cat-nav">
+        <a href="#electronics" class="cat-nav-btn">Électronique</a>
+        <a href="#fashion" class="cat-nav-btn">Mode</a>
+        <a href="#home-kitchen" class="cat-nav-btn">Maison</a>
+        <a href="#beauty" class="cat-nav-btn">Beauté</a>
+        <a href="#sports" class="cat-nav-btn">Sport</a>
+        <a href="#accessories" class="cat-nav-btn">Accessoires</a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- OVERVIEW GRID -->
+  <div class="container">
+    <div class="cat-overview">
+      <div class="cat-overview-grid">
+        <a href="#electronics" class="cat-overview-card tall">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500" alt="Électronique">
+          <div class="cat-overview-label">
+            <h3>Électronique</h3>
+            <span>Smartphones, Audio</span>
+          </div>
+        </a>
+        <a href="#fashion" class="cat-overview-card">
+          <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=500" alt="Mode">
+          <div class="cat-overview-label">
+            <h3>Mode &amp; Vêtements</h3>
+            <span>Homme, Femme, Enfant</span>
+          </div>
+        </a>
+        <a href="#beauty" class="cat-overview-card">
+          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=500" alt="Beauté">
+          <div class="cat-overview-label">
+            <h3>Beauté &amp; Bien-être</h3>
+            <span>Soins, Parfums</span>
+          </div>
+        </a>
+        <a href="#home-kitchen" class="cat-overview-card">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=500" alt="Maison">
+          <div class="cat-overview-label">
+            <h3>Maison &amp; Cuisine</h3>
+            <span>Déco, Électroménager</span>
+          </div>
+        </a>
+        <a href="#sports" class="cat-overview-card">
+          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500" alt="Sport">
+          <div class="cat-overview-label">
+            <h3>Sport &amp; Loisirs</h3>
+            <span>Fitness, Plein air</span>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 
+  <!-- SECTIONS DÉTAIL -->
   <div class="container categories-page">
 
+    <!-- ÉLECTRONIQUE -->
     <div class="cat-section" id="electronics">
       <div class="cat-section-header">
-        <h2>Électronique</h2>
-        <span>Smartphones, Audio, Informatique</span>
+        <div class="cat-section-left">
+          <div class="cat-section-icon">📱</div>
+          <div>
+            <h2>Électronique</h2>
+          </div>
+          <span class="cat-count">4 produits</span>
+        </div>
+        <a href="boutique.html" class="cat-section-link">Voir tout →</a>
       </div>
       <div class="cat-products-grid">
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="Casque audio"><div class="cat-card-body"><h3>Casque Audio Pro</h3><p>Son immersif sans fil</p><p class="price">35 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Montre connectée"><div class="cat-card-body"><h3>Montre Connectée</h3><p>Suivi santé et notifications</p><p class="price">55 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400" alt="Appareil photo"><div class="cat-card-body"><h3>Appareil Photo Instant</h3><p>Photos imprimées en secondes</p><p class="price">28 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" alt="Écouteurs"><div class="cat-card-body"><h3>Écouteurs True Wireless</h3><p>Autonomie 30h, étanche</p><p class="price">18 000 F CFA</p></div></div>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap">
+            <img class="cat-card-img" src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400" alt="Casque audio">
+          </div>
+          <div class="cat-card-body">
+            <h3>Casque Audio Pro</h3>
+            <p>Son immersif sans fil</p>
+            <div class="cat-card-footer">
+              <span class="cat-card-price">35 000 F CFA</span>
+              <button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>
+            </div>
+          </div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap">
+            <img class="cat-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Montre connectée">
+            <span class="cat-card-badge">Populaire</span>
+          </div>
+          <div class="cat-card-body">
+            <h3>Montre Connectée</h3>
+            <p>Suivi santé et notifications</p>
+            <div class="cat-card-footer">
+              <span class="cat-card-price">55 000 F CFA</span>
+              <button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>
+            </div>
+          </div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap">
+            <img class="cat-card-img" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400" alt="Appareil photo">
+          </div>
+          <div class="cat-card-body">
+            <h3>Appareil Photo Instant</h3>
+            <p>Photos imprimées en secondes</p>
+            <div class="cat-card-footer">
+              <span class="cat-card-price">28 000 F CFA</span>
+              <button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>
+            </div>
+          </div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap">
+            <img class="cat-card-img" src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400" alt="Écouteurs">
+          </div>
+          <div class="cat-card-body">
+            <h3>Écouteurs True Wireless</h3>
+            <p>Autonomie 30h, étanche</p>
+            <div class="cat-card-footer">
+              <span class="cat-card-price">18 000 F CFA</span>
+              <button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button>
+            </div>
+          </div>
+        </a>
       </div>
     </div>
 
+    <!-- MODE -->
     <div class="cat-section" id="fashion">
       <div class="cat-section-header">
-        <h2>Mode &amp; Vêtements</h2>
-        <span>Hommes, Femmes, Enfants</span>
+        <div class="cat-section-left">
+          <div class="cat-section-icon">👗</div>
+          <div><h2>Mode &amp; Vêtements</h2></div>
+          <span class="cat-count">4 produits</span>
+        </div>
+        <a href="boutique.html" class="cat-section-link">Voir tout →</a>
       </div>
       <div class="cat-products-grid">
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400" alt="Veste"><div class="cat-card-body"><h3>Veste Tendance</h3><p>Collection automne 2025</p><p class="price">42 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400" alt="Manteau"><div class="cat-card-body"><h3>Manteau Élégant</h3><p>Laine premium, coupe droite</p><p class="price">85 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400" alt="Robe"><div class="cat-card-body"><h3>Robe Légère</h3><p>Tissu naturel, toutes saisons</p><p class="price">22 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400" alt="Sac"><div class="cat-card-body"><h3>Sac en Cuir</h3><p>Artisanat de qualité</p><p class="price">65 000 F CFA</p></div></div>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=400" alt="Veste"></div>
+          <div class="cat-card-body"><h3>Veste Tendance</h3><p>Collection 2025</p><div class="cat-card-footer"><span class="cat-card-price">42 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400" alt="Manteau"></div>
+          <div class="cat-card-body"><h3>Manteau Élégant</h3><p>Laine premium</p><div class="cat-card-footer"><span class="cat-card-price">85 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400" alt="Robe"></div>
+          <div class="cat-card-body"><h3>Robe Légère</h3><p>Tissu naturel</p><div class="cat-card-footer"><span class="cat-card-price">22 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=400" alt="Sac"><span class="cat-card-badge">Nouveau</span></div>
+          <div class="cat-card-body"><h3>Sac en Cuir</h3><p>Artisanat de qualité</p><div class="cat-card-footer"><span class="cat-card-price">65 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
       </div>
     </div>
 
+    <!-- MAISON -->
     <div class="cat-section" id="home-kitchen">
       <div class="cat-section-header">
-        <h2>Maison &amp; Cuisine</h2>
-        <span>Décoration, Électroménager, Rangement</span>
+        <div class="cat-section-left">
+          <div class="cat-section-icon">🏠</div>
+          <div><h2>Maison &amp; Cuisine</h2></div>
+          <span class="cat-count">4 produits</span>
+        </div>
+        <a href="boutique.html" class="cat-section-link">Voir tout →</a>
       </div>
       <div class="cat-products-grid">
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400" alt="Lampe"><div class="cat-card-body"><h3>Lampe Design</h3><p>Lumière chaude, bois naturel</p><p class="price">19 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400" alt="Cafetière"><div class="cat-card-body"><h3>Cafetière Premium</h3><p>Expresso maison en 30s</p><p class="price">45 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400" alt="Canapé"><div class="cat-card-body"><h3>Coussin Décoratif</h3><p>Set de 2, tissu velours</p><p class="price">12 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400" alt="Robot culinaire"><div class="cat-card-body"><h3>Robot Culinaire</h3><p>Multifonction 1200W</p><p class="price">75 000 F CFA</p></div></div>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=400" alt="Lampe"></div>
+          <div class="cat-card-body"><h3>Lampe Design</h3><p>Bois naturel, lumière chaude</p><div class="cat-card-footer"><span class="cat-card-price">19 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400" alt="Cafetière"></div>
+          <div class="cat-card-body"><h3>Cafetière Premium</h3><p>Expresso en 30 secondes</p><div class="cat-card-footer"><span class="cat-card-price">45 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400" alt="Coussin"></div>
+          <div class="cat-card-body"><h3>Coussin Décoratif</h3><p>Set de 2, tissu velours</p><div class="cat-card-footer"><span class="cat-card-price">12 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400" alt="Robot culinaire"></div>
+          <div class="cat-card-body"><h3>Robot Culinaire</h3><p>Multifonction 1200W</p><div class="cat-card-footer"><span class="cat-card-price">75 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
       </div>
     </div>
 
+    <!-- BEAUTÉ -->
     <div class="cat-section" id="beauty">
       <div class="cat-section-header">
-        <h2>Beauté &amp; Bien-être</h2>
-        <span>Soins, Parfums, Maquillage</span>
+        <div class="cat-section-left">
+          <div class="cat-section-icon">💄</div>
+          <div><h2>Beauté &amp; Bien-être</h2></div>
+          <span class="cat-count">4 produits</span>
+        </div>
+        <a href="boutique.html" class="cat-section-link">Voir tout →</a>
       </div>
       <div class="cat-products-grid">
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400" alt="Palette maquillage"><div class="cat-card-body"><h3>Palette Maquillage</h3><p>24 teintes longue tenue</p><p class="price">16 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400" alt="Sérum visage"><div class="cat-card-body"><h3>Sérum Éclat</h3><p>Vitamine C, anti-taches</p><p class="price">24 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400" alt="Parfum"><div class="cat-card-body"><h3>Eau de Parfum</h3><p>Notes florales et boisées</p><p class="price">32 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1519415943484-9fa1873496d4?w=400" alt="Crème hydratante"><div class="cat-card-body"><h3>Crème Hydratante</h3><p>Formule naturelle, 24h</p><p class="price">9 000 F CFA</p></div></div>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=400" alt="Palette"></div>
+          <div class="cat-card-body"><h3>Palette Maquillage</h3><p>24 teintes longue tenue</p><div class="cat-card-footer"><span class="cat-card-price">16 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400" alt="Sérum"></div>
+          <div class="cat-card-body"><h3>Sérum Éclat</h3><p>Vitamine C, anti-taches</p><div class="cat-card-footer"><span class="cat-card-price">24 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=400" alt="Parfum"></div>
+          <div class="cat-card-body"><h3>Eau de Parfum</h3><p>Notes florales et boisées</p><div class="cat-card-footer"><span class="cat-card-price">32 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1519415943484-9fa1873496d4?w=400" alt="Crème"></div>
+          <div class="cat-card-body"><h3>Crème Hydratante</h3><p>Formule naturelle 24h</p><div class="cat-card-footer"><span class="cat-card-price">9 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
       </div>
     </div>
 
+    <!-- SPORT -->
     <div class="cat-section" id="sports">
       <div class="cat-section-header">
-        <h2>Sport &amp; Loisirs</h2>
-        <span>Fitness, Plein air, Natation</span>
+        <div class="cat-section-left">
+          <div class="cat-section-icon">⚽</div>
+          <div><h2>Sport &amp; Loisirs</h2></div>
+          <span class="cat-count">4 produits</span>
+        </div>
+        <a href="boutique.html" class="cat-section-link">Voir tout →</a>
       </div>
       <div class="cat-products-grid">
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400" alt="Équipement sport"><div class="cat-card-body"><h3>Tapis de Yoga</h3><p>Antidérapant, 6mm d'épaisseur</p><p class="price">14 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400" alt="Bouteille sport"><div class="cat-card-body"><h3>Bouteille Isotherme</h3><p>Maintient froid 24h, chaud 12h</p><p class="price">8 500 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1434596922112-19c563067271?w=400" alt="Vélo"><div class="cat-card-body"><h3>Casque Vélo</h3><p>Certification CE, léger 220g</p><p class="price">22 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400" alt="Baskets"><div class="cat-card-body"><h3>Baskets Running</h3><p>Semelle amortissante Pro</p><p class="price">48 000 F CFA</p></div></div>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400" alt="Tapis yoga"></div>
+          <div class="cat-card-body"><h3>Tapis de Yoga</h3><p>Antidérapant, 6mm</p><div class="cat-card-footer"><span class="cat-card-price">14 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400" alt="Bouteille"></div>
+          <div class="cat-card-body"><h3>Bouteille Isotherme</h3><p>Froid 24h, chaud 12h</p><div class="cat-card-footer"><span class="cat-card-price">8 500 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1434596922112-19c563067271?w=400" alt="Casque vélo"></div>
+          <div class="cat-card-body"><h3>Casque Vélo</h3><p>Certifié CE, 220g</p><div class="cat-card-footer"><span class="cat-card-price">22 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=400" alt="Baskets"><span class="cat-card-badge">Populaire</span></div>
+          <div class="cat-card-body"><h3>Baskets Running</h3><p>Semelle amortissante Pro</p><div class="cat-card-footer"><span class="cat-card-price">48 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
       </div>
     </div>
 
+    <!-- ACCESSOIRES -->
     <div class="cat-section" id="accessories">
       <div class="cat-section-header">
-        <h2>Accessoires</h2>
-        <span>Bijoux, Ceintures, Lunettes</span>
+        <div class="cat-section-left">
+          <div class="cat-section-icon">👜</div>
+          <div><h2>Accessoires</h2></div>
+          <span class="cat-count">4 produits</span>
+        </div>
+        <a href="boutique.html" class="cat-section-link">Voir tout →</a>
       </div>
       <div class="cat-products-grid">
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Montre"><div class="cat-card-body"><h3>Montre Minimaliste</h3><p>Bracelet cuir, verre saphir</p><p class="price">58 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Sac à dos"><div class="cat-card-body"><h3>Sac à Dos Urbain</h3><p>15L, compartiment laptop</p><p class="price">29 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1484771913198-3ebe5de72d1c?w=400" alt="Lunettes"><div class="cat-card-body"><h3>Lunettes de Soleil</h3><p>Protection UV400, polarisées</p><p class="price">17 000 F CFA</p></div></div>
-        <div class="cat-card"><img class="cat-card-img" src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400" alt="Portefeuille"><div class="cat-card-body"><h3>Portefeuille Slim</h3><p>Cuir véritable, blocage RFID</p><p class="price">12 500 F CFA</p></div></div>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" alt="Montre"></div>
+          <div class="cat-card-body"><h3>Montre Minimaliste</h3><p>Bracelet cuir, verre saphir</p><div class="cat-card-footer"><span class="cat-card-price">58 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400" alt="Sac à dos"></div>
+          <div class="cat-card-body"><h3>Sac à Dos Urbain</h3><p>15L, compartiment laptop</p><div class="cat-card-footer"><span class="cat-card-price">29 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1484771913198-3ebe5de72d1c?w=400" alt="Lunettes"></div>
+          <div class="cat-card-body"><h3>Lunettes de Soleil</h3><p>Protection UV400, polarisées</p><div class="cat-card-footer"><span class="cat-card-price">17 000 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
+        <a href="boutique.html" class="cat-card">
+          <div class="cat-card-img-wrap"><img class="cat-card-img" src="https://images.unsplash.com/photo-1506629082955-511b1aa562c8?w=400" alt="Portefeuille"></div>
+          <div class="cat-card-body"><h3>Portefeuille Slim</h3><p>Cuir véritable, RFID</p><div class="cat-card-footer"><span class="cat-card-price">12 500 F CFA</span><button class="cat-card-btn" onclick="event.preventDefault()"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></button></div></div>
+        </a>
       </div>
     </div>
 
@@ -138,10 +451,21 @@
 
   <footer class="main-footer">
     <div class="container footer-container">
-      <div class="footer-col"><h2 class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Maket bi</h2><p class="footer-about">Votre boutique en ligne de confiance.</p></div>
-      <div class="footer-col"><h3>La Boutique</h3><ul><li><a href="boutique.html">Tous les produits</a></li><li><a href="categories.html">Catégories</a></li><li><a href="promotions.html">Promotions</a></li></ul></div>
-      <div class="footer-col"><h3>Support</h3><ul><li><a href="faq.html">FAQ</a></li><li><a href="livraison.html">Livraison</a></li><li><a href="retours.html">Retours</a></li><li><a href="conditions.html">CGV</a></li></ul></div>
-      <div class="footer-col"><h3>Contact</h3><ul class="contact-info"><li>Dakar, Sénégal</li><li>+221 77 921 10 73</li><li>contact@maketbi.sn</li></ul></div>
+      <div class="footer-col">
+        <h2 class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Maket bi</h2>
+        <p class="footer-about">Votre boutique en ligne de confiance, pour trouver les meilleurs produits livrés directement chez vous.</p>
+      </div>
+      <div class="footer-col"><h3>La Boutique</h3><ul>
+        <li><a href="boutique.html">Tous les produits</a></li>
+        <li><a href="categories.html">Catégories</a></li>
+        <li><a href="a-propos.html">À propos</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul class="contact-info">
+        <li>Dakar, Sénégal</li>
+        <li>+221 77 921 10 73</li>
+        <li>contact@maketbi.sn</li>
+      </ul></div>
     </div>
     <div class="footer-bottom"><div class="container bottom-container"><p>&copy; 2026 Maket bi. Tous droits réservés.</p></div></div>
   </footer>
