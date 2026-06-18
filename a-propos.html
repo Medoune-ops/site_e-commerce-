@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>À propos — Maket bi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-hero { background: var(--bg-light); padding: 60px 0; text-align: center; }
+    .page-hero h1 { font-size: 38px; font-weight: 700; margin-bottom: 14px; }
+    .page-hero p { color: var(--text-light); font-size: 16px; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+    .about-section { padding: 70px 0; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+    .about-grid.reverse { direction: rtl; }
+    .about-grid.reverse > * { direction: ltr; }
+    .about-img { width: 100%; border-radius: 20px; object-fit: cover; height: 360px; }
+    .about-text h2 { font-size: 28px; font-weight: 700; margin-bottom: 16px; line-height: 1.3; }
+    .about-text p { color: var(--text-light); font-size: 15px; line-height: 1.8; margin-bottom: 16px; }
+    .values-section { background: var(--bg-light); padding: 70px 0; }
+    .values-section h2 { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 40px; }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+    .value-card { background: #fff; border-radius: 14px; padding: 28px 24px; border: 1px solid #eef0f2; text-align: center; }
+    .value-icon { width: 52px; height: 52px; background: var(--bg-light); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--primary-color); }
+    .value-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .value-card p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+    .stats-section { padding: 60px 0; }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; }
+    .stat-item h3 { font-size: 36px; font-weight: 800; color: var(--primary-color); margin-bottom: 6px; }
+    .stat-item p { font-size: 14px; color: var(--text-light); }
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; gap: 30px; }
+      .about-grid.reverse { direction: ltr; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .page-hero h1 { font-size: 28px; }
+    }
+    @media (max-width: 480px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container navbar-container">
+      <a href="index.html" class="logo"><span class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span> Maket bi</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html">Accueil</a><a href="boutique.html">Boutique</a><a href="categories.html">Catégories</a><a href="a-propos.html" class="active">À propos</a><a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button class="icon-btn cart-btn" onclick="window.location='panier.html'"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="cart-badge">0</span></button>
+        <a href="connexion.html" class="btn-auth btn-login">Connexion</a>
+        <a href="inscription.html" class="btn-auth btn-register">Inscription</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-hero">
+    <div class="container">
+      <h1>Notre histoire</h1>
+      <p>Maket bi est née d'une conviction simple : chacun mérite d'accéder aux meilleurs produits, au meilleur prix, sans effort.</p>
+    </div>
+  </div>
+
+  <div class="about-section">
+    <div class="container">
+      <div class="about-grid">
+        <img class="about-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=700" alt="Notre équipe">
+        <div class="about-text">
+          <h2>Fondée à Dakar, pensée pour toute l'Afrique</h2>
+          <p>Maket bi a été créée en 2022 par une équipe passionnée de commerce et de technologie. Notre mission : rendre le shopping en ligne accessible, fiable et agréable pour tous les Sénégalais.</p>
+          <p>Nous sélectionnons rigoureusement chaque produit pour vous garantir qualité, authenticité et rapport qualité-prix exceptionnel. Du sourcing à la livraison, chaque étape est pensée pour vous.</p>
+          <a href="boutique.html" class="btn btn-primary">Découvrir la boutique →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item"><h3>12 000+</h3><p>Clients satisfaits</p></div>
+        <div class="stat-item"><h3>3 500+</h3><p>Produits disponibles</p></div>
+        <div class="stat-item"><h3>98%</h3><p>Taux de satisfaction</p></div>
+        <div class="stat-item"><h3>48h</h3><p>Délai de livraison moyen</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="values-section">
+    <div class="container">
+      <h2>Nos valeurs</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <h3>Passion client</h3>
+          <p>Votre satisfaction est notre priorité absolue, avant tout le reste.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+          <h3>Confiance</h3>
+          <p>Paiement sécurisé, produits authentiques et politique de retour claire.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>Réactivité</h3>
+          <p>Des livraisons rapides et un support toujours disponible pour vous.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+          <h3>Accessibilité</h3>
+          <p>Des prix honnêtes pour que chacun puisse profiter de la qualité.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="main-footer">
+    <div class="container footer-container">
+      <div class="footer-col"><h2 class="footer-logo"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg> Maket bi</h2><p class="footer-about">Votre boutique en ligne de confiance.</p></div>
+      <div class="footer-col"><h3>La Boutique</h3><ul><li><a href="boutique.html">Tous les produits</a></li><li><a href="categories.html">Catégories</a></li><li><a href="promotions.html">Promotions</a></li></ul></div>
+      <div class="footer-col"><h3>Support</h3><ul><li><a href="faq.html">FAQ</a></li><li><a href="livraison.html">Livraison</a></li><li><a href="retours.html">Retours</a></li></ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul class="contact-info"><li>Dakar, Sénégal</li><li>+221 77 921 10 73</li><li>contact@maketbi.sn</li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="container bottom-container"><p>&copy; 2026 Maket bi. Tous droits réservés.</p></div></div>
+  </footer>
+  <script src="main.js"></script>
+  <script src="auth.js"></script>
+</body>
+</html>

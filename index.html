@@ -20,11 +20,11 @@
     </button>
 
     <nav class="nav-links" id="nav-links">
-      <a href="#accueil" class="active">Accueil</a>
-      <a href="#products-grid">Boutique</a>
-      <a href="#categories">Catégories</a>
-      <a href="#a-propos">À propos</a>
-      <a href="#contact">Contact</a>
+      <a href="index.html" class="active">Accueil</a>
+      <a href="boutique.html">Boutique</a>
+      <a href="categories.html">Catégories</a>
+      <a href="a-propos.html">À propos</a>
+      <a href="contact.html">Contact</a>
     </nav>
 
     <div class="nav-actions">
@@ -37,16 +37,16 @@
           <button id="search-clear">✕</button>
         </div>
       </div>
-      <button class="icon-btn wishlist-nav-btn" aria-label="Liste de souhaits">
+      <button class="icon-btn wishlist-nav-btn" aria-label="Liste de souhaits" onclick="window.location='wishlist.html'">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           <span class="wishlist-badge">0</span>
       </button>
-      <button class="icon-btn cart-btn" aria-label="Panier">
+      <button class="icon-btn cart-btn" aria-label="Panier" onclick="window.location='panier.html'">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         <span class="cart-badge">0</span>
       </button>
-      <a href="#connexion" class="btn-auth btn-login">Connexion</a>
-      <a href="#inscription" class="btn-auth btn-register">Inscription</a>
+      <a href="connexion.html" class="btn-auth btn-login">Connexion</a>
+      <a href="inscription.html" class="btn-auth btn-register">Inscription</a>
     </div>
   </div>
 </header>
@@ -67,8 +67,8 @@
       </p>
 
       <div class="hero-actions">
-        <a href="#products-grid" class="btn btn-primary">Découvrir nos produits →</a>
-        <a href="#categories" class="btn btn-secondary">Voir les catégories</a>
+        <a href="boutique.html" class="btn btn-primary">Découvrir nos produits →</a>
+        <a href="categories.html" class="btn btn-secondary">Voir les catégories</a>
       </div>
 
       <div class="hero-reviews">
@@ -140,47 +140,47 @@
 
     <div class="section-header">
       <h2>Produits par catégorie</h2>
-      <a href="#all-categories" class="view-all-link">Voir tout →</a>
+      <a href="categories.html" class="view-all-link">Voir tout →</a>
     </div>
 
     <div class="categories-display">
 
-      <a href="#electronics" class="category-item">
+      <a href="categories.html#electronics" class="category-item">
         <div class="category-circle bg-blue">
           <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150" alt="Électronique">
         </div>
         <span>Électronique</span>
       </a>
 
-      <a href="#fashion" class="category-item">
+      <a href="categories.html#fashion" class="category-item">
         <div class="category-circle bg-pink">
           <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=150" alt="Mode">
         </div>
         <span>Mode & Vêtements</span>
       </a>
 
-      <a href="#home-kitchen" class="category-item">
+      <a href="categories.html#home-kitchen" class="category-item">
         <div class="category-circle bg-yellow">
           <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=150" alt="Maison & Cuisine">
         </div>
         <span>Maison & Cuisine</span>
       </a>
 
-      <a href="#beauty" class="category-item">
+      <a href="categories.html#beauty" class="category-item">
         <div class="category-circle bg-purple">
           <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=150" alt="Beauté">
         </div>
         <span>Beauté & Bien-être</span>
       </a>
 
-      <a href="#sports" class="category-item">
+      <a href="categories.html#sports" class="category-item">
         <div class="category-circle bg-grey">
           <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=150" alt="Sport">
         </div>
         <span>Sport & Loisirs</span>
       </a>
 
-      <a href="#accessories" class="category-item">
+      <a href="categories.html#accessories" class="category-item">
         <div class="category-circle bg-orange">
           <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150" alt="Accessoires">
         </div>
@@ -195,7 +195,7 @@
 
     <div class="section-header">
       <h2>Nos meilleures ventes</h2>
-      <a href="#all-products" class="view-all-link">Voir tout →</a>
+      <a href="boutique.html" class="view-all-link">Voir tout →</a>
     </div>
 
     <div id="products-grid" class="products-grid">
@@ -234,11 +234,11 @@
           </div>
         </div>
 
-        <a href="#shop" class="btn btn-primary promo-btn">Profiter des offres →</a>
+        <a href="promotions.html" class="btn btn-primary promo-btn">Profiter des offres →</a>
       </div>
 
       <div class="promo-image-box">
-        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" alt="Chaussure en promotion" class="promo-img">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600" alt="Sac en promotion" class="promo-img">
       </div>
 
     </div>
@@ -351,20 +351,20 @@
     <div class="footer-col">
       <h3>La Boutique</h3>
       <ul>
-        <li><a href="#shop">Tous les produits</a></li>
-        <li><a href="#categories">Catégories</a></li>
-        <li><a href="#deals">Nos promotions</a></li>
-        <li><a href="#new">Nouveautés</a></li>
+        <li><a href="boutique.html">Tous les produits</a></li>
+        <li><a href="categories.html">Catégories</a></li>
+        <li><a href="promotions.html">Nos promotions</a></li>
+        <li><a href="boutique.html?filter=new">Nouveautés</a></li>
       </ul>
     </div>
 
     <div class="footer-col">
       <h3>Support</h3>
       <ul>
-        <li><a href="#faq">FAQ</a></li>
-        <li><a href="#delivery">Informations de livraison</a></li>
-        <li><a href="#returns">Échanges et remboursements</a></li>
-        <li><a href="#terms">Conditions Générales</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="livraison.html">Informations de livraison</a></li>
+        <li><a href="retours.html">Échanges et remboursements</a></li>
+        <li><a href="conditions.html">Conditions Générales</a></li>
       </ul>
     </div>
 
