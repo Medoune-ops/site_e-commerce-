@@ -193,12 +193,20 @@
 
     <div class="section-header">
       <h2>Nos meilleures ventes</h2>
-      <a href="boutique.html" class="view-all-link">Voir tout →</a>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <button class="scroll-arrow" id="scroll-prev" aria-label="Précédent">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="scroll-arrow" id="scroll-next" aria-label="Suivant">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <a href="boutique.html" class="view-all-link">Voir tout →</a>
+      </div>
     </div>
 
-    <div id="products-grid" class="products-grid">
-
-
+    <div class="products-scroll-track">
+      <div id="products-grid" class="products-grid products-grid--scroll"></div>
+    </div>
   </div>
 </section>
 <section class="promo-section">
@@ -321,6 +329,15 @@
 <script src="api.js"></script>
     <script src="main.js"></script>
     <script src="auth.js"></script>
+    <script>
+      const track = document.querySelector('.products-scroll-track');
+      document.getElementById('scroll-prev')?.addEventListener('click', () => {
+        track.scrollBy({ left: -320, behavior: 'smooth' });
+      });
+      document.getElementById('scroll-next')?.addEventListener('click', () => {
+        track.scrollBy({ left: 320, behavior: 'smooth' });
+      });
+    </script>
 </body>
    <footer class="main-footer" id="contact">
   <div class="container footer-container">

@@ -936,14 +936,58 @@ a {
    ========================================================================== */
 .products-section {
     padding: 60px 0;
-    background-color: #fafafa; /* Léger fond contrasté pour faire ressortir les cartes blanches */
+    background-color: #fafafa;
 }
 
-/* Grille principale automatique à 4 colonnes */
+/* Grille principale (boutique) */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 25px;
+}
+
+/* ── SCROLL HORIZONTAL (accueil) ── */
+.products-scroll-track {
+    overflow-x: auto;
+    overflow-y: visible;
+    padding-bottom: 16px;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+.products-scroll-track::-webkit-scrollbar { display: none; }
+
+.products-grid--scroll {
+    display: flex;
+    gap: 20px;
+    grid-template-columns: none;
+    width: max-content;
+}
+
+.products-grid--scroll .product-card {
+    width: 250px;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+}
+
+/* ── BOUTONS FLÈCHE ── */
+.scroll-arrow {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-color);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.scroll-arrow:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: #f9fdf4;
 }
 
 /* Structure d'une carte produit */
