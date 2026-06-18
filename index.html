@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LEPP LAY DIAYE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Maket bi — Votre boutique en ligne</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="main-header">
   <div class="container navbar-container">
     <a href="#" class="logo">
-      <span class="logo-icon">🛍️</span> Maket bi
+      <span class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+      </span> Maket bi
     </a>
 
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -20,24 +22,28 @@
     <nav class="nav-links" id="nav-links">
       <a href="#accueil" class="active">Accueil</a>
       <a href="#products-grid">Boutique</a>
-      <a href="#categories">Categories</a>
-      <a href="#a-propos">A propos</a>
+      <a href="#categories">Catégories</a>
+      <a href="#a-propos">À propos</a>
       <a href="#contact">Contact</a>
     </nav>
 
     <div class="nav-actions">
       <div class="search-wrapper">
-        <button class="icon-btn" id="search-toggle" aria-label="Search">🔍</button>
+        <button class="icon-btn" id="search-toggle" aria-label="Rechercher">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
         <div class="search-bar" id="search-bar">
           <input type="text" id="search-input" placeholder="Rechercher un produit...">
           <button id="search-clear">✕</button>
         </div>
       </div>
-      <button class="icon-btn wishlist-nav-btn" aria-label="Wishlist">
-          ❤️ <span class="wishlist-badge">0</span>
+      <button class="icon-btn wishlist-nav-btn" aria-label="Liste de souhaits">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          <span class="wishlist-badge">0</span>
       </button>
-      <button class="icon-btn cart-btn" aria-label="Cart">
-        🛒 <span class="cart-badge">0</span>
+      <button class="icon-btn cart-btn" aria-label="Panier">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-badge">0</span>
       </button>
       <a href="#connexion" class="btn-auth btn-login">Connexion</a>
       <a href="#inscription" class="btn-auth btn-register">Inscription</a>
@@ -47,35 +53,38 @@
 
 <section class="hero-section" id="accueil">
   <div class="container hero-container">
-    
+
     <div class="hero-content">
-      <span class="badge">✨ New Arrivages</span>
-      
-      <h1>LOUGN DIAYOUL BAKHOUL<br>Lepp amna nak</h1>
-      
+      <span class="badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Nouvelles Arrivées
+      </span>
+
+      <h1>Les meilleures offres<br>tout ce dont vous avez besoin</h1>
+
       <p class="hero-description">
-        Diaye la si gneuk you kheewale livrer lako do faye dara li dou diaye mayee la way
+        Achetez les meilleurs produits aux prix les plus bas, livrés chez vous sans frais supplémentaires.
       </p>
-      
+
       <div class="hero-actions">
-        <a href="#products-grid" class="btn btn-primary">loy khar pour dieundeu →</a>
-        <a href="#categories" class="btn btn-secondary">kaay khool</a>
+        <a href="#products-grid" class="btn btn-primary">Découvrir nos produits →</a>
+        <a href="#categories" class="btn btn-secondary">Voir les catégories</a>
       </div>
-      
+
       <div class="hero-reviews">
         <div class="customer-avatars">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Customer 1">
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Customer 2">
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Customer 3">
-          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Customer 4">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Client 1">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Client 2">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Client 3">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100" alt="Client 4">
         </div>
-        <p class="reviews-text">Sedenagn ni lou bakh yeup gnokoy diaaye</p>
+        <p class="reviews-text">Des milliers de clients satisfaits nous font confiance</p>
       </div>
     </div>
 
     <div class="hero-visual">
       <div class="podium-display">
-        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600" alt="Featured Backpack" class="main-hero-img">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600" alt="Sac à dos en vedette" class="main-hero-img">
         </div>
     </div>
 
@@ -83,36 +92,44 @@
 </section>
 <section class="features-bar">
   <div class="container features-container">
-    
+
     <div class="feature-item">
-      <div class="feature-icon">🚚</div>
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
       <div class="feature-text">
-        <h3>do fay livraison</h3>
-        <p>ligua dieundeu soumater 25 000 F CFA</p>
+        <h3>Livraison gratuite</h3>
+        <p>Pour toute commande supérieure à 25 000 F CFA</p>
       </div>
     </div>
 
     <div class="feature-item">
-      <div class="feature-icon">🔒</div>
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
       <div class="feature-text">
-        <h3>weer te woor </h3>
+        <h3>Paiement sécurisé</h3>
         <p>100% garanti à la livraison</p>
       </div>
     </div>
 
     <div class="feature-item">
-      <div class="feature-icon">🔄</div>
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>
+      </div>
       <div class="feature-text">
-        <h3>Sola doyoul gnou delo la </h3>
-        <p>Satisfait ou remboursé sous 7j</p>
+        <h3>Retours faciles</h3>
+        <p>Satisfait ou remboursé sous 7 jours</p>
       </div>
     </div>
 
     <div class="feature-item">
-      <div class="feature-icon">📞</div>
+      <div class="feature-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
       <div class="feature-text">
         <h3>Support 24/7</h3>
-        <p>Sognou wower diote gnou</p>
+        <p>Notre équipe est toujours disponible pour vous</p>
       </div>
     </div>
 
@@ -120,54 +137,54 @@
 </section>
 <section class="categories-section" id="categories">
   <div class="container">
-    
+
     <div class="section-header">
-      <h2>Produits par Categories</h2>
-      <a href="#all-categories" class="view-all-link">Kholal fii →</a>
+      <h2>Produits par catégorie</h2>
+      <a href="#all-categories" class="view-all-link">Voir tout →</a>
     </div>
 
     <div class="categories-display">
-      
+
       <a href="#electronics" class="category-item">
         <div class="category-circle bg-blue">
-          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150" alt="Electronics">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=150" alt="Électronique">
         </div>
-        <span>Electronics</span>
+        <span>Électronique</span>
       </a>
 
       <a href="#fashion" class="category-item">
         <div class="category-circle bg-pink">
-          <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=150" alt="Fashion">
+          <img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=150" alt="Mode">
         </div>
-        <span>Solok soumekou</span>
+        <span>Mode & Vêtements</span>
       </a>
 
       <a href="#home-kitchen" class="category-item">
         <div class="category-circle bg-yellow">
-          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=150" alt="Home & Kitchen">
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?w=150" alt="Maison & Cuisine">
         </div>
-        <span>bagagou keur</span>
+        <span>Maison & Cuisine</span>
       </a>
 
       <a href="#beauty" class="category-item">
         <div class="category-circle bg-purple">
-          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=150" alt="Beauty">
+          <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=150" alt="Beauté">
         </div>
-        <span>Produits beaute</span>
+        <span>Beauté & Bien-être</span>
       </a>
 
       <a href="#sports" class="category-item">
         <div class="category-circle bg-grey">
-          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=150" alt="Sports">
+          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=150" alt="Sport">
         </div>
-        <span>Sports</span>
+        <span>Sport & Loisirs</span>
       </a>
 
       <a href="#accessories" class="category-item">
         <div class="category-circle bg-orange">
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150" alt="Accessories">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=150" alt="Accessoires">
         </div>
-        <span>Accessories</span>
+        <span>Accessoires</span>
       </a>
 
     </div>
@@ -175,50 +192,53 @@
 </section>
 <section class="products-section">
   <div class="container">
-    
+
     <div class="section-header">
-      <h2>You bakh yi</h2>
-      <a href="#all-products" class="view-all-link">Kay yendouu →</a>
+      <h2>Nos meilleures ventes</h2>
+      <a href="#all-products" class="view-all-link">Voir tout →</a>
     </div>
 
     <div id="products-grid" class="products-grid">
-      
-    
+
+
   </div>
 </section>
 <section class="promo-section">
   <div class="container">
     <div class="promo-banner">
-      
+
       <div class="promo-content">
-        <span class="promo-badge">🔥 Lo indi ame dara</span>
-        <h2>produits yi day wathie ba 50%<br>Yaye taneu</h2>
-        <p class="promo-text">Ahhh boul ko ratee diayatougn dagniye mayer kaay leen dieundeu day diekh deh lissi dess beurri woul yekh gnakk</p>
-        
+        <span class="promo-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c0 6-8 8-8 14a8 8 0 0 0 16 0c0-6-8-8-8-14z"/></svg>
+          Offre limitée
+        </span>
+        <h2>Jusqu'à 50% de réduction<br>sur une sélection de produits</h2>
+        <p class="promo-text">Ne manquez pas cette occasion unique ! Des réductions exceptionnelles sur les articles les plus populaires. Profitez-en avant la fin du compte à rebours.</p>
+
         <div class="countdown-container">
           <div class="countdown-box">
             <span class="time">02</span>
-            <span class="label">Days</span>
+            <span class="label">Jours</span>
           </div>
           <div class="countdown-box">
             <span class="time">14</span>
-            <span class="label">Hours</span>
+            <span class="label">Heures</span>
           </div>
           <div class="countdown-box">
             <span class="time">45</span>
-            <span class="label">Mins</span>
+            <span class="label">Minutes</span>
           </div>
           <div class="countdown-box">
             <span class="time">18</span>
-            <span class="label">Secs</span>
+            <span class="label">Secondes</span>
           </div>
         </div>
 
-        <a href="#shop" class="btn btn-primary promo-btn">Guaw lene dieundeu →</a>
+        <a href="#shop" class="btn btn-primary promo-btn">Profiter des offres →</a>
       </div>
 
       <div class="promo-image-box">
-        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" alt="Promo Shoe" class="promo-img">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600" alt="Chaussure en promotion" class="promo-img">
       </div>
 
     </div>
@@ -226,32 +246,47 @@
 </section>
 <section class="testimonials-section" id="a-propos">
   <div class="container">
-    
+
     <div class="testimonials-header">
-      <span>💬 Seder clients yi</span>
-      <h2>Yoyou seder</h2>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Avis de nos clients
+      </span>
+      <h2>Ce qu'ils disent de nous</h2>
     </div>
 
     <div class="testimonials-grid">
-      
+
       <div class="testimonial-card">
-        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
         <p class="testimonial-text">
-          "Yena meilleur deh"
+          "Vraiment la meilleure boutique en ligne, je suis totalement conquise !"
         </p>
         <div class="testimonial-user">
-          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Fatou Diop" class="user-avatar">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" alt="Mariline" class="user-avatar">
           <div class="user-info">
-            <h3>mariline</h3>
+            <h3>Mariline</h3>
             <span>Acheteur vérifié</span>
           </div>
         </div>
       </div>
 
       <div class="testimonial-card">
-        <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+        <div class="testimonial-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
         <p class="testimonial-text">
-          "Deyzakoulanakhhh boutiquou nandite yagui ni "
+          "Une boutique incroyable, je commande depuis des mois et je ne suis jamais déçu !"
         </p>
         <div class="testimonial-user">
           <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" alt="Moussa Ndiaye" class="user-avatar">
@@ -263,14 +298,20 @@
       </div>
 
       <div class="testimonial-card">
-        <div class="testimonial-stars">⭐⭐⭐⭐★</div>
+        <div class="testimonial-stars">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
         <p class="testimonial-text">
-          "Yena woor te guaww ayy livraison"
+          "Produits de qualité et livraison rapide, je recommande vivement !"
         </p>
         <div class="testimonial-user">
           <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100" alt="Awa Seydi" class="user-avatar">
           <div class="user-info">
-            <h3>Toubab bi</h3>
+            <h3>Awa Seydi</h3>
             <span>Acheteur vérifié</span>
           </div>
         </div>
@@ -285,25 +326,35 @@
 </body>
    <footer class="main-footer" id="contact">
   <div class="container footer-container">
-    
+
     <div class="footer-col">
-      <h2 class="footer-logo">🛍️ Maket bi</h2>
+      <h2 class="footer-logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        Maket bi
+      </h2>
       <p class="footer-about">
-       Diaye la produits you bakh yi andile lako bassa keur si lou yombou
+        Votre boutique en ligne de confiance, pour trouver les meilleurs produits livrés directement chez vous.
+      </p>
       <div class="social-links">
-        <a href="#" aria-label="Facebook">📘</a>
-        <a href="#" aria-label="Instagram">📸</a>
-        <a href="#" aria-label="WhatsApp">💬</a>
+        <a href="#" aria-label="Facebook">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+        <a href="#" aria-label="WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </a>
       </div>
     </div>
 
     <div class="footer-col">
-      <h3>Boutique bi</h3>
+      <h3>La Boutique</h3>
       <ul>
-        <li><a href="#shop">Mboleme produits yi</a></li>
-        <li><a href="#categories">Pathie yi </a></li>
-        <li><a href="#deals">Sougnouy promotions</a></li>
-        <li><a href="#new">Bess bess yi</a></li>
+        <li><a href="#shop">Tous les produits</a></li>
+        <li><a href="#categories">Catégories</a></li>
+        <li><a href="#deals">Nos promotions</a></li>
+        <li><a href="#new">Nouveautés</a></li>
       </ul>
     </div>
 
@@ -311,8 +362,8 @@
       <h3>Support</h3>
       <ul>
         <li><a href="#faq">FAQ</a></li>
-        <li><a href="#delivery">Saytou livraison yi</a></li>
-        <li><a href="#returns">dieulate ak delo soula nekher</a></li>
+        <li><a href="#delivery">Informations de livraison</a></li>
+        <li><a href="#returns">Échanges et remboursements</a></li>
         <li><a href="#terms">Conditions Générales</a></li>
       </ul>
     </div>
@@ -320,9 +371,18 @@
     <div class="footer-col">
       <h3>Contact</h3>
       <ul class="contact-info">
-        <li>📍 Dakar, Sénégal</li>
-        <li>📞 +221 77 921 10 73</li>
-        <li>✉️ contact@maketbi.sn</li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Dakar, Sénégal
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.38 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +221 77 921 10 73
+        </li>
+        <li>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          contact@maketbi.sn
+        </li>
       </ul>
     </div>
 
@@ -333,5 +393,5 @@
       <p>&copy; 2026 Maket bi. Tous droits réservés.</p>
     </div>
   </div>
-</footer> 
+</footer>
 </html>
