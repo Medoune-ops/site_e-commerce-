@@ -584,14 +584,12 @@
   </div>
 </div>
 
-<script src="api.js"></script>
-<script src="main.js"></script>
-<script src="auth.js"></script>
 <script>
   const BACKEND = "https://apisecur-production.up.railway.app";
   let allProducts = [];
-  let filteredProducts = [];
   let pendingDeleteId = null;
+
+  function getToken() { return localStorage.getItem('token'); }
 
   // ── NAVIGATION ─────────────────────────────────────
   document.querySelectorAll('.dash-nav-item[data-panel]').forEach(btn => {
@@ -607,17 +605,20 @@
   });
 
   // Sidebar toggle mobile
-  const sidebarToggle = document.getElementById('sidebar-toggle');
-  if (window.innerWidth <= 900) sidebarToggle.style.display = 'block';
-  sidebarToggle.addEventListener('click', () => {
+  document.getElementById('sidebar-toggle').addEventListener('click', () => {
     document.getElementById('dash-sidebar').classList.toggle('open');
   });
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar-toggle').style.display = 'block';
+  }
 
   // ── PRODUITS ───────────────────────────────────────
   async function loadProducts() {
     try {
       const res = await fetch(`${BACKEND}/api/products`);
+      if (!res.ok) throw new Error();
       allProducts = await res.json();
+      if (!Array.isArray(allProducts)) allProducts = [];
     } catch { allProducts = []; }
 
     renderProductsTable(allProducts);
@@ -632,83 +633,71 @@
     return `<span class="stock-badge stock-ok">${stock} en stock</span>`;
   }
 
-  function productRowHTML(p, compact = false) {
-    const img   = p.imageUrl || 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100';
-    const price = Number(p.price || 0).toLocaleString('fr-FR');
-    const old   = p.oldPrice ? Number(p.oldPrice).toLocaleString('fr-FR') + ' F' : '—';
-    const rating = p.rating ? `⭐ ${p.rating}` : '—';
-    if (compact) return `
-      <tr>
-        <td><img src="${img}" class="prod-img-cell" alt="${p.name}"></td>
-        <td class="prod-name-cell">${p.name || '—'}</td>
-        <td class="prod-price-cell">${price} F</td>
-        <td>${rating}</td>
-        <td>${stockBadge(p.stock)}</td>
-        <td><div class="action-btns">
-          <button class="btn-edit" onclick="openEditModal('${p._id}')">Modifier</button>
-          <button class="btn-delete" onclick="confirmDelete('${p._id}')">Supprimer</button>
-        </div></td>
-      </tr>`;
-    return `
-      <tr>
-        <td><img src="${img}" class="prod-img-cell" alt="${p.name}"></td>
-        <td class="prod-name-cell">${p.name || '—'}</td>
-        <td class="prod-price-cell">${price} F</td>
-        <td style="color:var(--text-light);">${old}</td>
-        <td>${rating}</td>
-        <td>${stockBadge(p.stock)}</td>
-        <td><div class="action-btns">
-          <button class="btn-edit" onclick="openEditModal('${p._id}')">Modifier</button>
-          <button class="btn-delete" onclick="confirmDelete('${p._id}')">Supprimer</button>
-        </div></td>
-      </tr>`;
+  function esc(str) {
+    return String(str || '').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function productRowHTML(p, compact) {
+    const img    = esc(p.imageUrl || 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100');
+    const price  = Number(p.price || 0).toLocaleString('fr-FR');
+    const old    = p.oldPrice ? Number(p.oldPrice).toLocaleString('fr-FR') + ' F' : '—';
+    const rating = p.rating ? '⭐ ' + p.rating : '—';
+    const id     = esc(p._id);
+    const name   = esc(p.name);
+    const actions = `<div class="action-btns">
+      <button class="btn-edit" onclick="openEditModal('${id}')">Modifier</button>
+      <button class="btn-delete" onclick="confirmDelete('${id}')">Supprimer</button>
+    </div>`;
+    if (compact) return `<tr>
+      <td><img src="${img}" class="prod-img-cell" alt="${name}" onerror="this.src='https://via.placeholder.com/44'"></td>
+      <td class="prod-name-cell">${name || '—'}</td>
+      <td class="prod-price-cell">${price} F</td>
+      <td>${rating}</td>
+      <td>${stockBadge(p.stock)}</td>
+      <td>${actions}</td></tr>`;
+    return `<tr>
+      <td><img src="${img}" class="prod-img-cell" alt="${name}" onerror="this.src='https://via.placeholder.com/44'"></td>
+      <td class="prod-name-cell">${name || '—'}</td>
+      <td class="prod-price-cell">${price} F</td>
+      <td style="color:#888;">${old}</td>
+      <td>${rating}</td>
+      <td>${stockBadge(p.stock)}</td>
+      <td>${actions}</td></tr>`;
   }
 
   function renderProductsTable(list) {
-    const loading = document.getElementById('products-loading');
-    const table   = document.getElementById('products-table');
-    const body    = document.getElementById('products-body');
-    const empty   = document.getElementById('products-empty');
-    const count   = document.getElementById('prod-table-count');
-
-    loading.style.display = 'none';
-    count.textContent = list.length + ' produit' + (list.length > 1 ? 's' : '');
-
+    document.getElementById('products-loading').style.display = 'none';
+    document.getElementById('prod-table-count').textContent = list.length + ' produit' + (list.length > 1 ? 's' : '');
     if (list.length === 0) {
-      table.style.display = 'none';
-      empty.style.display = 'block';
+      document.getElementById('products-table').style.display = 'none';
+      document.getElementById('products-empty').style.display = 'block';
       return;
     }
-    empty.style.display = 'none';
-    table.style.display = 'table';
-    body.innerHTML = list.map(p => productRowHTML(p, false)).join('');
+    document.getElementById('products-empty').style.display = 'none';
+    document.getElementById('products-table').style.display = 'table';
+    document.getElementById('products-body').innerHTML = list.map(p => productRowHTML(p, false)).join('');
   }
 
   function renderOverviewProducts(list) {
-    const loading = document.getElementById('overview-products-loading');
-    const table   = document.getElementById('overview-products-table');
-    const body    = document.getElementById('overview-products-body');
-    loading.style.display = 'none';
-    table.style.display = 'table';
-    body.innerHTML = list.map(p => productRowHTML(p, true)).join('');
+    document.getElementById('overview-products-loading').style.display = 'none';
+    document.getElementById('overview-products-table').style.display = 'table';
+    document.getElementById('overview-products-body').innerHTML = list.map(p => productRowHTML(p, true)).join('');
   }
 
   function updateStats(products) {
     document.getElementById('stat-products').textContent = products.length;
     document.getElementById('trend-products').textContent = products.length + ' total';
     document.getElementById('trend-products').className = 'stat-card-trend trend-up';
-
     const revenue = products.reduce((s, p) => s + (p.price || 0) * (p.reviewsCount || 0), 0);
-    document.getElementById('stat-revenue').textContent = (revenue / 1000).toFixed(0) + 'K';
+    document.getElementById('stat-revenue').textContent = revenue > 0 ? (revenue / 1000).toFixed(0) + 'K' : '0';
     document.getElementById('stat-orders').textContent = products.reduce((s, p) => s + (p.reviewsCount || 0), 0);
     document.getElementById('stat-clients').textContent = Math.floor(products.length * 3.2);
   }
 
-  // Recherche dans la table
+  // Recherche
   document.getElementById('prod-search').addEventListener('input', function() {
     const q = this.value.trim().toLowerCase();
-    const filtered = allProducts.filter(p => (p.name || '').toLowerCase().includes(q));
-    renderProductsTable(filtered);
+    renderProductsTable(q ? allProducts.filter(p => (p.name || '').toLowerCase().includes(q)) : allProducts);
   });
 
   // ── MODAL PRODUIT ──────────────────────────────────
@@ -726,14 +715,14 @@
     if (!p) return;
     document.getElementById('modal-title').textContent = 'Modifier le produit';
     document.getElementById('modal-save-btn').textContent = 'Enregistrer';
-    document.getElementById('product-id').value = p._id;
-    document.getElementById('p-name').value     = p.name || '';
-    document.getElementById('p-price').value    = p.price || '';
-    document.getElementById('p-oldprice').value = p.oldPrice || '';
-    document.getElementById('p-rating').value   = p.rating || '';
-    document.getElementById('p-reviews').value  = p.reviewsCount || '';
-    document.getElementById('p-image').value    = p.imageUrl || '';
-    document.getElementById('p-stock').value    = p.stock || '';
+    document.getElementById('product-id').value  = p._id;
+    document.getElementById('p-name').value      = p.name || '';
+    document.getElementById('p-price').value     = p.price || '';
+    document.getElementById('p-oldprice').value  = p.oldPrice || '';
+    document.getElementById('p-rating').value    = p.rating || '';
+    document.getElementById('p-reviews').value   = p.reviewsCount || '';
+    document.getElementById('p-image').value     = p.imageUrl || '';
+    document.getElementById('p-stock').value     = p.stock || '';
     document.getElementById('modal-error').classList.remove('visible');
     document.getElementById('product-modal').classList.remove('hidden');
   }
@@ -744,18 +733,19 @@
 
   async function submitProduct(e) {
     e.preventDefault();
-    const token = localStorage.getItem('token');
+    const token = getToken();
     const id    = document.getElementById('product-id').value;
-    const body  = {
-      name:         document.getElementById('p-name').value,
-      price:        parseFloat(document.getElementById('p-price').value),
-      oldPrice:     parseFloat(document.getElementById('p-oldprice').value) || undefined,
-      rating:       parseFloat(document.getElementById('p-rating').value) || undefined,
-      reviewsCount: parseInt(document.getElementById('p-reviews').value) || undefined,
-      imageUrl:     document.getElementById('p-image').value || undefined,
-      stock:        parseInt(document.getElementById('p-stock').value) || undefined,
-    };
-    Object.keys(body).forEach(k => body[k] === undefined && delete body[k]);
+    const body  = { name: document.getElementById('p-name').value, price: parseFloat(document.getElementById('p-price').value) };
+    const op    = parseFloat(document.getElementById('p-oldprice').value);
+    const rt    = parseFloat(document.getElementById('p-rating').value);
+    const rv    = parseInt(document.getElementById('p-reviews').value);
+    const img   = document.getElementById('p-image').value;
+    const stk   = parseInt(document.getElementById('p-stock').value);
+    if (!isNaN(op)) body.oldPrice = op;
+    if (!isNaN(rt)) body.rating = rt;
+    if (!isNaN(rv)) body.reviewsCount = rv;
+    if (img) body.imageUrl = img;
+    if (!isNaN(stk)) body.stock = stk;
 
     const url    = id ? `${BACKEND}/api/products/${id}` : `${BACKEND}/api/products`;
     const method = id ? 'PUT' : 'POST';
@@ -769,7 +759,7 @@
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        errEl.textContent = data.message || `Erreur ${res.status}`;
+        errEl.textContent = data.message || `Erreur ${res.status} — vérifiez vos droits admin`;
         errEl.classList.add('visible');
         return;
       }
@@ -794,11 +784,10 @@
 
   document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
     if (!pendingDeleteId) return;
-    const token = localStorage.getItem('token');
     try {
       await fetch(`${BACKEND}/api/products/${pendingDeleteId}`, {
         method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${getToken()}` }
       });
     } catch {}
     closeConfirmModal();
@@ -807,18 +796,16 @@
 
   // ── COMMANDES ──────────────────────────────────────
   async function loadOrders() {
-    const token = localStorage.getItem('token');
     document.getElementById('orders-loading').style.display = 'block';
     document.getElementById('orders-table').style.display = 'none';
     document.getElementById('orders-empty').style.display = 'none';
-
     try {
       const res = await fetch(`${BACKEND}/api/admin/orders`, {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: { 'Authorization': `Bearer ${getToken()}` }
       });
       if (!res.ok) throw new Error();
       const orders = await res.json();
-      renderOrders(orders);
+      renderOrders(Array.isArray(orders) ? orders : []);
     } catch {
       document.getElementById('orders-loading').style.display = 'none';
       document.getElementById('orders-empty').style.display = 'block';
@@ -827,29 +814,25 @@
 
   function renderOrders(orders) {
     document.getElementById('orders-loading').style.display = 'none';
-    if (!orders.length) {
-      document.getElementById('orders-empty').style.display = 'block';
-      return;
-    }
+    if (!orders.length) { document.getElementById('orders-empty').style.display = 'block'; return; }
     const STATUS = {
-      pending:   { label: 'En attente',   cls: 'status-pending'   },
-      shipping:  { label: 'En livraison', cls: 'status-shipping'  },
-      delivered: { label: 'Livrée',       cls: 'status-delivered' },
-      cancelled: { label: 'Annulée',      cls: 'status-cancelled' },
+      pending:   { label: 'En attente',   color: '#f57f17', bg: '#fff8e1' },
+      shipping:  { label: 'En livraison', color: '#1565c0', bg: '#e3f2fd' },
+      delivered: { label: 'Livrée',       color: '#2e7d32', bg: '#e8f5e9' },
+      cancelled: { label: 'Annulée',      color: '#c62828', bg: '#fce4ec' },
     };
-    const body = document.getElementById('orders-body');
-    body.innerHTML = orders.map(o => {
-      const s = STATUS[o.status] || STATUS.pending;
+    document.getElementById('orders-body').innerHTML = orders.map(o => {
+      const s     = STATUS[o.status] || STATUS.pending;
       const total = Number(o.total || 0).toLocaleString('fr-FR');
       const date  = o.createdAt ? new Date(o.createdAt).toLocaleDateString('fr-FR') : '—';
       const items = (o.items || []).length;
       return `<tr>
-        <td style="font-weight:700;">#${(o._id || o.id || '').slice(-8).toUpperCase()}</td>
-        <td>${o.userEmail || o.user || '—'}</td>
+        <td style="font-weight:700;">#${String(o._id || o.id || '').slice(-8).toUpperCase()}</td>
+        <td>${esc(o.userEmail || o.user || '—')}</td>
         <td>${date}</td>
         <td>${items} article${items > 1 ? 's' : ''}</td>
-        <td style="font-weight:700;">${total} F CFA</td>
-        <td><span class="status-pill ${s.cls}">${s.label}</span></td>
+        <td style="font-weight:700;">${total} F</td>
+        <td><span class="status-pill" style="background:${s.bg};color:${s.color};">${s.label}</span></td>
       </tr>`;
     }).join('');
     document.getElementById('orders-table').style.display = 'table';
@@ -857,13 +840,15 @@
 
   // ── DÉCONNEXION ────────────────────────────────────
   document.getElementById('dash-logout-btn').addEventListener('click', () => {
-    logout();
+    localStorage.removeItem('token');
+    localStorage.removeItem('cart');
+    localStorage.removeItem('wishlist');
     window.location.href = 'index.html';
   });
 
   // ── INIT ───────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('token');
+  (function init() {
+    const token = getToken();
     if (!token) {
       document.getElementById('dash-gate').style.display = 'flex';
       document.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
@@ -871,12 +856,12 @@
     }
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      const name = payload.name || payload.email?.split('@')[0] || 'Admin';
+      const name = payload.name || (payload.email ? payload.email.split('@')[0] : 'Admin');
       document.getElementById('dash-username').textContent = name;
       document.getElementById('dash-avatar').textContent = name.charAt(0).toUpperCase();
     } catch {}
     loadProducts();
-  });
+  })();
 </script>
 </body>
 </html>
