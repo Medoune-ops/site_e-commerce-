@@ -331,12 +331,46 @@
     <script src="auth.js"></script>
     <script>
       const track = document.querySelector('.products-scroll-track');
+
+      // Défilement automatique
+      let autoScroll;
+      function startAutoScroll() {
+        autoScroll = setInterval(() => {
+          const maxScroll = track.scrollWidth - track.clientWidth;
+          if (track.scrollLeft >= maxScroll - 2) {
+            track.scrollTo({ left: 0, behavior: 'smooth' });
+          } else {
+            track.scrollBy({ left: 270, behavior: 'smooth' });
+          }
+        }, 3000);
+      }
+
+      // Pause au survol
+      track?.addEventListener('mouseenter', () => clearInterval(autoScroll));
+      track?.addEventListener('mouseleave', startAutoScroll);
+      track?.addEventListener('touchstart', () => clearInterval(autoScroll), { passive: true });
+      track?.addEventListener('touchend', startAutoScroll, { passive: true });
+
+      // Flèches manuelles
       document.getElementById('scroll-prev')?.addEventListener('click', () => {
-        track.scrollBy({ left: -320, behavior: 'smooth' });
+        clearInterval(autoScroll);
+        track.scrollBy({ left: -270, behavior: 'smooth' });
+        startAutoScroll();
       });
       document.getElementById('scroll-next')?.addEventListener('click', () => {
-        track.scrollBy({ left: 320, behavior: 'smooth' });
+        clearInterval(autoScroll);
+        track.scrollBy({ left: 270, behavior: 'smooth' });
+        startAutoScroll();
       });
+
+      // Démarrer après chargement des produits
+      const observer = new MutationObserver(() => {
+        if (document.querySelectorAll('.products-grid--scroll .product-card').length > 0) {
+          observer.disconnect();
+          setTimeout(startAutoScroll, 1500);
+        }
+      });
+      if (track) observer.observe(track, { childList: true, subtree: true });
     </script>
 </body>
    <footer class="main-footer" id="contact">
