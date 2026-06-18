@@ -432,6 +432,8 @@ a {
 
     .nav-actions { gap: 6px; }
 
+    .btn-login, .btn-register { display: none; }
+
     .btn-auth {
         padding: 7px 14px;
         font-size: 13px;
@@ -588,9 +590,6 @@ a {
 
 /* ── RESPONSIVE PETIT MOBILE (≤480px) ───────────────── */
 @media (max-width: 480px) {
-
-    /* Navbar — masquer les boutons auth, ils sont dans le menu */
-    .btn-login, .btn-register { display: none; }
 
     /* Hero */
     .hero-content h1 { font-size: 24px; }
