@@ -52,19 +52,15 @@ async function loadUserData() {
         ]);
         if (cartRes.ok) {
             const serverCart = await cartRes.json();
-            if (serverCart.length > 0) {
-                cart = serverCart;
-                saveCart();
-                updateCartBadge();
-            }
+            cart = Array.isArray(serverCart) ? serverCart : [];
+            saveCart();
+            updateCartBadge();
         }
         if (wishlistRes.ok) {
             const serverWishlist = await wishlistRes.json();
-            if (serverWishlist.length > 0) {
-                wishlist = serverWishlist;
-                saveWishlist();
-                updateWishlistBadge();
-            }
+            wishlist = Array.isArray(serverWishlist) ? serverWishlist : [];
+            saveWishlist();
+            updateWishlistBadge();
         }
     } catch (e) {}
 }

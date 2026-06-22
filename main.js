@@ -260,7 +260,8 @@ function handleCommander() {
         showLogin();
         return;
     }
-    alert("Commande en cours de traitement !");
+    // Rediriger vers la page de paiement (checkout)
+    window.location.href = "checkout.html";
 }
 
 function setupCartActions() {

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Paiement — Maket bi</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: var(--bg-light); padding-top: 100px; }
+    .checkout-container { max-width: 900px; margin: 40px auto; display: grid; grid-template-columns: 1.5fr 1fr; gap: 32px; padding: 0 20px; }
+    .checkout-section { background: white; border-radius: 16px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+    .checkout-section h2 { margin-bottom: 24px; font-size: 20px; font-weight: 700; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 14px; }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1); }
+    .order-summary-item { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid #f0f0f0; }
+    .order-summary-item img { width: 50px; height: 50px; object-fit: cover; border-radius: 8px; margin-right: 16px; }
+    .order-summary-item-info { flex: 1; }
+    .order-summary-item-info h4 { margin: 0 0 4px; font-size: 14px; }
+    .order-summary-item-info p { margin: 0; color: #666; font-size: 13px; }
+    .order-summary-item-price { font-weight: 600; }
+    .order-total { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 24px; border-top: 2px solid #eee; font-size: 18px; font-weight: 700; }
+    .btn-checkout { width: 100%; background: var(--primary-color); color: white; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 24px; }
+    .btn-checkout:hover { background: #5a52d5; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(108, 99, 255, 0.25); }
+    .radio-group { display: flex; flex-direction: column; gap: 12px; }
+    .radio-option { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid #e0e0e0; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+    .radio-option:hover { border-color: #bbb; }
+    .radio-option.selected { border-color: var(--primary-color); background: rgba(108, 99, 255, 0.03); }
+    .radio-option input[type="radio"] { margin: 0; cursor: pointer; }
+    
+    @media (max-width: 768px) {
+      .checkout-container { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar simple pour checkout -->
+  <header style="background:white; padding: 20px; border-bottom: 1px solid #eee; position: fixed; top: 0; width: 100%; z-index: 100;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+      <a href="index.html" style="text-decoration: none; font-size: 24px; font-weight: 800; color: var(--primary-color);">Maket bi.</a>
+      <a href="index.html" style="color: #666; text-decoration: none; font-weight: 500;">Retour à la boutique</a>
+    </div>
+  </header>
+
+  <div class="checkout-container">
+    <div class="checkout-section">
+      <h2>Détails de Livraison et Paiement</h2>
+      <form id="checkout-form">
+        
+        <!-- Mode de livraison -->
+        <div class="form-group">
+          <label>Mode de Livraison</label>
+          <div class="radio-group" id="delivery-group">
+            <label class="radio-option selected">
+              <input type="radio" name="deliveryMethod" value="delivery" checked onchange="toggleDeliveryOptions()">
+              <span>Livraison à domicile</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="deliveryMethod" value="pickup" onchange="toggleDeliveryOptions()">
+              <span>Récupération en boutique</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="address-field">
+          <label for="address">Adresse complète de livraison</label>
+          <input type="text" id="address" placeholder="Quartier, Rue, N° de villa / appartement">
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 32px 0;">
+
+        <!-- Mode de paiement -->
+        <div class="form-group">
+          <label>Mode de Paiement</label>
+          <div class="radio-group" id="payment-group">
+            <label class="radio-option selected">
+              <input type="radio" name="paymentMethod" value="cash" checked onchange="togglePaymentOptions()">
+              <span>Espèces (à la livraison ou en boutique)</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="paymentMethod" value="mobile_money" onchange="togglePaymentOptions()">
+              <span>Mobile Money (Wave, Orange Money)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" id="phone-field" style="display:none;">
+          <label for="phone">Numéro de téléphone (Mobile Money)</label>
+          <input type="tel" id="phone" placeholder="Ex: 77 123 45 67">
+        </div>
+
+        <div id="checkout-error" style="color: #e53935; font-size: 14px; margin-top: 16px; display: none;"></div>
+        
+        <button type="submit" class="btn-checkout">Confirmer la commande</button>
+      </form>
+    </div>
+
+    <div class="checkout-section" style="height: fit-content; position: sticky; top: 120px;">
+      <h2>Résumé de la commande</h2>
+      <div id="order-items-container">
+        <!-- Les articles seront injectés ici -->
+      </div>
+      <div class="order-total">
+        <span>Total</span>
+        <span id="order-total-amount">0 F</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="api.js"></script>
+  <script>
+    // Vérifier si l'utilisateur est connecté et s'il a un panier
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "index.html";
+    }
+
+    const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+    if (localCart.length === 0) {
+      window.location.href = "index.html";
+    }
+
+    // Afficher le résumé
+    const container = document.getElementById('order-items-container');
+    let total = 0;
+
+    localCart.forEach(item => {
+      total += item.price * item.quantity;
+      container.innerHTML += `
+        <div class="order-summary-item">
+          <img src="${item.imageUrl || 'assets/images/placeholder.jpg'}" alt="${item.name}">
+          <div class="order-summary-item-info">
+            <h4>${item.name}</h4>
+            <p>Quantité: ${item.quantity}</p>
+          </div>
+          <div class="order-summary-item-price">${(item.price * item.quantity).toLocaleString('fr-FR')} F</div>
+        </div>
+      `;
+    });
+
+    document.getElementById('order-total-amount').textContent = total.toLocaleString('fr-FR') + " F";
+
+    // Gérer l'UI des radios
+    function updateRadioUI(groupName) {
+      const radios = document.querySelectorAll(`input[name="${groupName}"]`);
+      radios.forEach(r => {
+        if (r.checked) {
+          r.parentElement.classList.add('selected');
+        } else {
+          r.parentElement.classList.remove('selected');
+        }
+      });
+    }
+
+    function toggleDeliveryOptions() {
+      updateRadioUI('deliveryMethod');
+      const method = document.querySelector('input[name="deliveryMethod"]:checked').value;
+      const addrField = document.getElementById('address-field');
+      if (method === 'delivery') {
+        addrField.style.display = 'block';
+      } else {
+        addrField.style.display = 'none';
+      }
+    }
+
+    function togglePaymentOptions() {
+      updateRadioUI('paymentMethod');
+      const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const phoneField = document.getElementById('phone-field');
+      if (method === 'mobile_money') {
+        phoneField.style.display = 'block';
+      } else {
+        phoneField.style.display = 'none';
+      }
+    }
+
+    // Soumission du formulaire
+    document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const errEl = document.getElementById('checkout-error');
+      errEl.style.display = 'none';
+
+      const deliveryMethod = document.querySelector('input[name="deliveryMethod"]:checked').value;
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const deliveryAddress = document.getElementById('address').value;
+      const mobileMoneyPhone = document.getElementById('phone').value;
+
+      if (deliveryMethod === 'delivery' && !deliveryAddress.trim()) {
+        errEl.textContent = "Veuillez renseigner une adresse de livraison.";
+        errEl.style.display = 'block';
+        return;
+      }
+
+      if (paymentMethod === 'mobile_money' && !mobileMoneyPhone.trim()) {
+        errEl.textContent = "Veuillez renseigner un numéro de téléphone pour le Mobile Money.";
+        errEl.style.display = 'block';
+        return;
+      }
+
+      const orderData = {
+        items: localCart,
+        totalAmount: total,
+        deliveryMethod,
+        paymentMethod,
+        deliveryAddress: deliveryMethod === 'delivery' ? deliveryAddress : null,
+        mobileMoneyPhone: paymentMethod === 'mobile_money' ? mobileMoneyPhone : null
+      };
+
+      try {
+        const res = await fetch(`${BACKEND_URL}/orders`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(orderData)
+        });
+
+        const data = await res.json();
+        
+        if (res.ok) {
+          // Succès ! Vider le panier local
+          localStorage.setItem('cart', '[]');
+          
+          // Rediriger vers la page des commandes (ou créer une page de succès)
+          window.location.href = "commandes.html";
+        } else {
+          errEl.textContent = data.message || "Erreur lors de la validation.";
+          errEl.style.display = 'block';
+        }
+      } catch (error) {
+        errEl.textContent = "Erreur réseau. Veuillez réessayer.";
+        errEl.style.display = 'block';
+      }
+    });
+
+  </script>
+</body>
+</html>

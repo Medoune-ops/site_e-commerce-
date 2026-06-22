@@ -179,6 +179,15 @@ async function handleLogin(event) {
         }
 
         localStorage.setItem("token", data.token);
+
+        // Nettoyer les données de l'ancien compte avant de charger le nouveau
+        localStorage.removeItem("cart");
+        localStorage.removeItem("wishlist");
+        cart = [];
+        wishlist = [];
+        updateCartBadge();
+        updateWishlistBadge();
+
         closeAuthModals();
         updateNavForLoggedUser(email);
         await loadUserData();
@@ -214,6 +223,15 @@ async function handleRegister(event) {
         }
 
         localStorage.setItem("token", data.token);
+
+        // Nettoyer les données locales pour un compte fraîchement créé
+        localStorage.removeItem("cart");
+        localStorage.removeItem("wishlist");
+        cart = [];
+        wishlist = [];
+        updateCartBadge();
+        updateWishlistBadge();
+
         closeAuthModals();
         updateNavForLoggedUser(email);
     } catch (error) {
