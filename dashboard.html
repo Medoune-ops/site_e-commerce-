@@ -809,11 +809,21 @@
   document.getElementById('confirm-delete-btn').addEventListener('click', async () => {
     if (!pendingDeleteId) return;
     try {
-      await fetch(`${BACKEND}/api/products/${pendingDeleteId}`, {
+      const res = await fetch(`${BACKEND}/api/products/${pendingDeleteId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${getToken()}` }
       });
-    } catch {}
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        alert(data.message || `Erreur ${res.status} lors de la suppression`);
+        closeConfirmModal();
+        return;
+      }
+    } catch {
+      alert("Erreur de connexion au serveur");
+      closeConfirmModal();
+      return;
+    }
     closeConfirmModal();
     await loadProducts();
   });
